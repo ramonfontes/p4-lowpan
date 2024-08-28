@@ -1,8 +1,22 @@
 from collections import defaultdict
 from scapy.all import *
 from scapy.fields import *
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 
+app = Flask(__name__)
+CORS(app)
 rank = defaultdict(list)
+
+@app.route('/api', methods=['GET'])
+def api_home():
+    return jsonify(dict(rank))
+
+@app.route('/api/data', methods=['POST'])
+def api_data():
+    data = request.json
+    # Processa os dados recebidos
+    return jsonify({"received_data": data})
 
 class Lowpan(Packet):
     name = "Lowpan"
@@ -216,6 +230,13 @@ def convert_to_ipv6(decimal_value):
     # Converte para o formato IPv6 legível
     return inet_ntop(socket.AF_INET6, address_bytes)
 
+
+def remove_value_from_lists(d, value):
+    for key in d:
+        if value in d[key]:
+            d[key] = [x for x in d[key] if x != value]
+
+
 def packet_handler(packet):
     """if packet.haslayer(Lowpan):
         lowpan_layer = packet.getlayer(Lowpan)
@@ -278,9 +299,9 @@ def packet_handler(packet):
         print(f"Prefix: {prefix}")
         print("=========================================\n")
 
-        if (dodagid_ipv6 not in rank[icmpv6_layer.rank]):
+        if icmpv6_layer.rank != 0:
+            remove_value_from_lists(rank, dodagid_ipv6)
             rank[icmpv6_layer.rank].append(dodagid_ipv6)
-        print(rank)
 
     if packet.haslayer(Icmpv6_dao):
         icmpv6_layer = packet.getlayer(Icmpv6_dao)
@@ -299,5 +320,15 @@ def packet_handler(packet):
         print("::::::::::::::::::::Icmpv6 DAOACK Header::::::::::::::::::::")
         print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
 
-sniff(iface="h1-eth0", filter="ether proto 0x1000 or ether proto 0x1001 or ether proto 0x1002 or ether proto 0x1003", prn=packet_handler)
+# Função para sniffar pacotes
+def packet_sniffer():
+    # Inicia o sniffer
+    sniff(iface="h1-eth1", filter="ether proto 0x1000 or ether proto 0x1001 or ether proto 0x1002 or ether proto 0x1003", prn=packet_handler)
+
+if __name__ == '__main__':
+    sniffer_thread = threading.Thread(target=packet_sniffer)
+    sniffer_thread.daemon = True  # Permite que a thread seja encerrada ao fechar o programa
+    sniffer_thread.start()
+
+    app.run(host='10.0.0.1', port=5000)
 
