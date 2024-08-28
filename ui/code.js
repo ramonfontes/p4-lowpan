@@ -35,8 +35,11 @@ function processData(rank) {
             nodes.push({
                 id: nodeIds[value],
                 label: label, // O label é o value
-                image: DIR + "icon.png", // Escolha a imagem apropriada
-                shape: "image",
+                //image: DIR + "icon.png", // Escolha a imagem apropriada
+                borderWidth: 3,
+                //shape: "database",
+                color: "orange",
+                //shape: "image",
             });
         }
 
@@ -52,13 +55,15 @@ function processData(rank) {
                     nodes.push({
                         id: nodeIds[nextValue],
                         label: nextValue, // O label é o próximo value
-                        image: DIR + "icon.png", // Escolha a imagem apropriada
-                        shape: "image",
+                        //color: "lime",
+                        borderWidth: 0,
+                        //image: DIR + "icon.png", // Escolha a imagem apropriada
+                        //shape: "image",
                     });
                 }
 
                 // Conectar value atual ao próximo rank
-                edges.push({ from: nodeIds[value], to: nodeIds[nextValue], length: EDGE_LENGTH_MAIN });
+                edges.push({ from: nodeIds[value], to: nodeIds[nextValue], color: "black", width: 1, length: EDGE_LENGTH_MAIN });
             });
         }
     });
@@ -79,20 +84,17 @@ function draw() {
     .then(data => {
       processData(data);
 
-      
-      
       if (!network) {
-      // Criar a rede de visualização
-      var container = document.getElementById("mynetwork");
-      var data = {
-        nodes: nodes,
-        edges: edges,
-      };
-      var options = {};
-      network = new vis.Network(container, data, options);
+          // Criar a rede de visualização
+          var container = document.getElementById("mynetwork");
+          var data = {
+            nodes: nodes,
+            edges: edges,
+          };
+          var options = { layout: { randomSeed: 8 } };
+          network = new vis.Network(container, data, options);
       }
       else{
-
         network.on("dragStart", function () {
           isInteracting = true; // Define a flag quando um nó é selecionado
         });
@@ -101,13 +103,12 @@ function draw() {
         });
 
         if (!isInteracting){
-         // Atualiza a rede existente com os novos dados
-        network.setData({
-          nodes: nodes,
-          edges: edges
-        });
-	}
-
+            // Atualiza a rede existente com os novos dados
+            network.setData({
+            nodes: nodes,
+            edges: edges
+            });
+        }
       }
     });
 }

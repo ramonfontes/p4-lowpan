@@ -1,3 +1,4 @@
+import logging
 from collections import defaultdict
 from scapy.all import *
 from scapy.fields import *
@@ -7,6 +8,10 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 rank = defaultdict(list)
+srcAddress = ""
+
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 @app.route('/api', methods=['GET'])
 def api_home():
@@ -238,6 +243,8 @@ def remove_value_from_lists(d, value):
 
 
 def packet_handler(packet):
+    global srcAddress
+    global rank
     """if packet.haslayer(Lowpan):
         lowpan_layer = packet.getlayer(Lowpan)
         print("Lowpan Header::::::::::::::::::::")
@@ -249,34 +256,47 @@ def packet_handler(packet):
 
     if packet.haslayer(IPv6Custom):
         ipv6_layer = packet.getlayer(IPv6Custom)
-        print("::::::::::::::::::::IPv6 Header::::::::::::::::::::::")
+        #print("::::::::::::::::::::IPv6 Header::::::::::::::::::::::")
         #print(f"Version: {ipv6_layer.version}")
-        print(f"Traffic Class: {ipv6_layer.trafficClass}")
+        #print(f"Traffic Class: {ipv6_layer.trafficClass}")
         #print(f"Flow Label: {ipv6_layer.flowLabel}")
         #print(f"Payload Length: {ipv6_layer.payloadLength}")
         #print(f"Next Header: {ipv6_layer.nextHeader}")
-        print(f"Hop Limit: {ipv6_layer.hopLimit}")
-        print(f"Src Addr: {ipv6_layer.srcAddr}")
-        print(f"Dst Addr: {ipv6_layer.dstAddr}\n")
+        #print(f"Hop Limit: {ipv6_layer.hopLimit}")
+        #print(f"Src Addr: {ipv6_layer.srcAddr}")
+        #print(f"Dst Addr: {ipv6_layer.dstAddr}\n")
+        srcAddress = ipv6_layer.srcAddr
+
+    if packet.haslayer(IPv6Custom1):
+        ipv6_layer = packet.getlayer(IPv6Custom1)
+        srcAddress = ipv6_layer.srcAddr
+
+    if packet.haslayer(IPv6Custom2):
+        ipv6_layer = packet.getlayer(IPv6Custom2)
+        srcAddress = ipv6_layer.srcAddr
+
+    if packet.haslayer(IPv6Custom3):
+        ipv6_layer = packet.getlayer(IPv6Custom3)
+        srcAddress = ipv6_layer.srcAddr
 
     if packet.haslayer(Icmpv6_dis):
         icmpv6_layer = packet.getlayer(Icmpv6_dis)
         print("::::::::::::::::::::Icmpv6 DIS Header::::::::::::::::::::")
-        print(f"Type: {icmpv6_layer.type}")
+        #print(f"Type: {icmpv6_layer.type}")
+        print(srcAddress)
 
     if packet.haslayer(Icmpv6_dio):
         icmpv6_layer = packet.getlayer(Icmpv6_dio)
         print("::::::::::::::::::::Icmpv6 DIO Header::::::::::::::::::::")
-        print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
-        print(f"Version: {icmpv6_layer.version}")
+        #print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
+        #print(f"Version: {icmpv6_layer.version}")
         print(f"Rank: {icmpv6_layer.rank}")
-        flags = decimal_para_binario(icmpv6_layer.flags)
+        """flags = decimal_para_binario(icmpv6_layer.flags)
         print(f"Flags: {flags}")
         if (flags[0]=="1"):
             print(f" -- Grounded")
         else:
             print(f" -- No Grounded")
-        print(flags)
         if (flags[1]=="0"):
             print(f" -- Zero: False")
         else:
@@ -288,37 +308,42 @@ def packet_handler(packet):
         if (flags[5:8]=="000"):
             print(f" -- Dodag Preference: 0")
         else:
-            print(f" -- xxxxxxxxxxxxxxx")
+            print(f" -- xxxxxxxxxxxxxxx")"""
         print(f"DTSN: {icmpv6_layer.DTSN}")
         dodagid_ipv6 = convert_to_ipv6(icmpv6_layer.DODAGID)
-        print(f"DODAGID: {dodagid_ipv6}")
-        print(f"Prefix Length: {icmpv6_layer.prefixLength}")
-        print(f"Flag: {icmpv6_layer.flag}")
-        print(f"Route Lifetime: Infinity({icmpv6_layer.routeLifetime})")
+        #print(f"DODAGID: {dodagid_ipv6}")
+        print(f"Node: {srcAddress}")
+        #print(f"Prefix Length: {icmpv6_layer.prefixLength}")
+        #print(f"Flag: {icmpv6_layer.flag}")
+        #print(f"Route Lifetime: Infinity({icmpv6_layer.routeLifetime})")
         prefix = convert_to_ipv6(icmpv6_layer.prefix)
-        print(f"Prefix: {prefix}")
+        #print(f"Prefix: {prefix}")
         print("=========================================\n")
 
-        if icmpv6_layer.rank != 0:
-            remove_value_from_lists(rank, dodagid_ipv6)
-            rank[icmpv6_layer.rank].append(dodagid_ipv6)
+        if icmpv6_layer.rank != 0 and srcAddress:
+            remove_value_from_lists(rank, srcAddress)
+            rank[icmpv6_layer.rank].append(srcAddress)
+            srcAddress = ""
 
     if packet.haslayer(Icmpv6_dao):
         icmpv6_layer = packet.getlayer(Icmpv6_dao)
         print("::::::::::::::::::::Icmpv6 DAO Header::::::::::::::::::::")
-        print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
-        flags = decimal_para_binario(icmpv6_layer.flag)
-        print(f"Flags: {flags}")
-        print(f"Reserved: {icmpv6_layer.reserved}")
-        dodagid_ipv6 = convert_to_ipv6(icmpv6_layer.DODAGID)
-        print(f"DODAGID: {dodagid_ipv6}")
-        print(f"Prefix Length: {icmpv6_layer.prefixLength}")
-        print("=========================================\n")
+        #print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
+        #flags = decimal_para_binario(icmpv6_layer.flag)
+        #print(f"Flags: {flags}")
+        #print(f"Reserved: {icmpv6_layer.reserved}")
+        #dodagid_ipv6 = convert_to_ipv6(icmpv6_layer.DODAGID)
+        #print(f"DODAGID: {dodagid_ipv6}")
+        #print(f"Prefix Length: {icmpv6_layer.prefixLength}")
+        #print("=========================================\n")
+        print(srcAddress)
 
     if packet.haslayer(Icmpv6_daoack):
-        icmpv6_layer = packet.getlayer(Icmpv6_daoack)
+        #icmpv6_layer = packet.getlayer(Icmpv6_daoack)
         print("::::::::::::::::::::Icmpv6 DAOACK Header::::::::::::::::::::")
-        print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
+        #print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
+        print(srcAddress)
+
 
 # Função para sniffar pacotes
 def packet_sniffer():

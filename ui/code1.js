@@ -9,7 +9,9 @@ var EDGE_LENGTH_SUB = 50;
 
 //var nodes = new vis.DataSet([]);
 //var edges = new vis.DataSet([]);
-
+var isInteracting = false;
+var prev_state = [];
+var curr_state = [];
 
 // Função para criar nós e arestas com base nos dados recebidos
 function processData(rank) {
@@ -77,6 +79,9 @@ function draw() {
     .then(data => {
       processData(data);
 
+
+
+      if (!network) {
       // Criar a rede de visualização
       var container = document.getElementById("mynetwork");
       var data = {
@@ -85,9 +90,31 @@ function draw() {
       };
       var options = {};
       network = new vis.Network(container, data, options);
+      }
+      else{
+
+        network.on("dragStart", function () {
+          isInteracting = true; // Define a flag quando um nó é selecionado
+        });
+        network.on("dragEnd", function () {
+          isInteracting = false; // Define a flag quando um nó é selecionado
+        });
+
+        if (!isInteracting){
+         // Atualiza a rede existente com os novos dados
+        network.setData({
+          nodes: nodes,
+          edges: edges
+        });
+	}
+
+      }
     });
 }
 
 window.addEventListener("load", () => {
   draw();
 });
+
+// Atualiza a rede a cada 1 segundo
+setInterval(draw, 1000);
