@@ -21,51 +21,55 @@ function processData(rank) {
 
   let idCounter = 1;
   const nodeIds = {};
-  let parent = 0;
 
   // Adicionar nós
   for (const [key, values] of Object.entries(rank)) {
     // Criar nós para cada value no rank atual
-    values.forEach(value => {
-        if (!(value in nodeIds)) {
-            nodeIds[value] = idCounter++;
-            label = `${values.join(', ')}`
-            if (key == 1)
-                label = "root"
+    values.forEach((value, index) => {
+        const from = value[0];
+        const to = value[1];
+        if (!(from in nodeIds)) {
+            nodeIds[from] = idCounter++;
+            label = from;
+            if (index == 0){
+                label = "P4-enabled\n6LoWPAN (root)";
+                nodes.push({
+                    id: nodeIds[from],
+                    label: label, // O label é o value
+                    //image: DIR + "icon.png", // Escolha a imagem apropriada
+                    borderWidth: 3,
+                    //shape: "database",
+                    color: "orange",
+                    //shape: "image",
+                });
+            }
+            else{
+                nodes.push({
+                    id: nodeIds[from],
+                    label: label.substring(label.length - 14), // O label é o value
+                    //image: DIR + "icon.png", // Escolha a imagem apropriada
+                    borderWidth: 3,
+                    //shape: "database",
+                    //shape: "image",
+                });
+            }
+        }
+
+        if (!(to in nodeIds)) {
+            nodeIds[to] = idCounter++;
+            label = to
             nodes.push({
-                id: nodeIds[value],
-                label: label, // O label é o value
+                id: nodeIds[to],
+                label: label.substring(label.length - 14), // O label é o value
                 //image: DIR + "icon.png", // Escolha a imagem apropriada
                 borderWidth: 3,
                 //shape: "database",
-                color: "orange",
+                //color: "orange",
                 //shape: "image",
             });
         }
 
-        // Conectar nó de rank atual ao próximo rank
-        const nextRankKey = String(Number(key) + 1);
-        if (nextRankKey in rank) {
-            const nextRankValues = rank[nextRankKey];
-
-            // Conectar todos os values do rank atual ao próximo rank
-            nextRankValues.forEach(nextValue => {
-                if (!(nextValue in nodeIds)) {
-                    nodeIds[nextValue] = idCounter++;
-                    nodes.push({
-                        id: nodeIds[nextValue],
-                        label: nextValue, // O label é o próximo value
-                        //color: "lime",
-                        borderWidth: 0,
-                        //image: DIR + "icon.png", // Escolha a imagem apropriada
-                        //shape: "image",
-                    });
-                }
-
-                // Conectar value atual ao próximo rank
-                edges.push({ from: nodeIds[value], to: nodeIds[nextValue], color: "black", width: 1, length: EDGE_LENGTH_MAIN });
-            });
-        }
+        edges.push({ from: nodeIds[from], to: nodeIds[to], color: "black", width: 1, length: EDGE_LENGTH_MAIN });
     });
     }
 }

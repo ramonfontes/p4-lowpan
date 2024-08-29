@@ -9,6 +9,7 @@ app = Flask(__name__)
 CORS(app)
 rank = defaultdict(list)
 srcAddress = ""
+rootNode = ""
 
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
@@ -20,7 +21,6 @@ def api_home():
 @app.route('/api/data', methods=['POST'])
 def api_data():
     data = request.json
-    # Processa os dados recebidos
     return jsonify({"received_data": data})
 
 class Lowpan(Packet):
@@ -156,6 +156,146 @@ class Icmpv6_dao(Packet):
         LongField("prefix", 0)
     ]
 
+class Icmpv6_dao_repeated(Packet):
+    name = "Icmpv6_dao_repeated"
+    fields_desc = [
+        ByteField("type", 0),
+        ByteField("code", 0),
+        ShortField("checksum", 0),
+        ByteField("RPLInstanceID", 0),
+        ByteField("flag", 0),
+        ByteField("reserved", 0),
+        ByteField("seq", 0),
+        BitField("DODAGID", 0, 128),
+        ByteField("optionType", 0),
+        ByteField("optionLength", 0),
+        ByteField("rplReserved", 0),
+        ByteField("prefixLength", 0),
+        BitField("prefix", 0, 128)
+    ]
+
+class Icmpv6_dao_repeated1(Packet):
+    name = "Icmpv6_dao_repeated1"
+    fields_desc = [
+        ByteField("type", 0),
+        ByteField("code", 0),
+        ShortField("checksum", 0),
+        ByteField("RPLInstanceID", 0),
+        ByteField("flag", 0),
+        ByteField("reserved", 0),
+        ByteField("seq", 0),
+        BitField("DODAGID", 0, 128),
+        ByteField("optionType1", 0),
+        ByteField("optionLength1", 0),
+        ByteField("rplReserved1", 0),
+        ByteField("prefixLength1", 0),
+        BitField("prefix1", 0, 128),
+        ByteField("optionType2", 0),
+        ByteField("optionLength2", 0),
+        ByteField("rplReserved2", 0),
+        ByteField("prefixLength2", 0),
+        BitField("prefix2", 0, 128)
+    ]
+
+class Icmpv6_dao_repeated2(Packet):
+    name = "Icmpv6_dao_repeated2"
+    fields_desc = [
+        ByteField("type", 0),
+        ByteField("code", 0),
+        ShortField("checksum", 0),
+        ByteField("RPLInstanceID", 0),
+        ByteField("flag", 0),
+        ByteField("reserved", 0),
+        ByteField("seq", 0),
+        BitField("DODAGID", 0, 128),
+        ByteField("optionType1", 0),
+        ByteField("optionLength1", 0),
+        ByteField("rplReserved1", 0),
+        ByteField("prefixLength1", 0),
+        BitField("prefix1", 0, 128),
+        ByteField("optionType2", 0),
+        ByteField("optionLength2", 0),
+        ByteField("rplReserved2", 0),
+        ByteField("prefixLength2", 0),
+        BitField("prefix2", 0, 128),
+        ByteField("optionType3", 0),
+        ByteField("optionLength3", 0),
+        ByteField("rplReserved3", 0),
+        ByteField("prefixLength3", 0),
+        BitField("prefix3", 0, 128)
+    ]
+
+class Icmpv6_dao_repeated3(Packet):
+    name = "Icmpv6_dao_repeated3"
+    fields_desc = [
+        ByteField("type", 0),
+        ByteField("code", 0),
+        ShortField("checksum", 0),
+        ByteField("RPLInstanceID", 0),
+        ByteField("flag", 0),
+        ByteField("reserved", 0),
+        ByteField("seq", 0),
+        BitField("DODAGID", 0, 128),
+        ByteField("optionType1", 0),
+        ByteField("optionLength1", 0),
+        ByteField("rplReserved1", 0),
+        ByteField("prefixLength1", 0),
+        BitField("prefix1", 0, 128),
+        ByteField("optionType2", 0),
+        ByteField("optionLength2", 0),
+        ByteField("rplReserved2", 0),
+        ByteField("prefixLength2", 0),
+        BitField("prefix2", 0, 128),
+        ByteField("optionType3", 0),
+        ByteField("optionLength3", 0),
+        ByteField("rplReserved3", 0),
+        ByteField("prefixLength3", 0),
+        BitField("prefix3", 0, 128),
+        ByteField("optionType4", 0),
+        ByteField("optionLength4", 0),
+        ByteField("rplReserved4", 0),
+        ByteField("prefixLength4", 0),
+        BitField("prefix4", 0, 128)
+    ]
+
+class Icmpv6_dao_repeated4(Packet):
+    name = "Icmpv6_dao_repeated4"
+    fields_desc = [
+        ByteField("type", 0),
+        ByteField("code", 0),
+        ShortField("checksum", 0),
+        ByteField("RPLInstanceID", 0),
+        ByteField("flag", 0),
+        ByteField("reserved", 0),
+        ByteField("seq", 0),
+        BitField("DODAGID", 0, 128),
+        ByteField("optionType1", 0),
+        ByteField("optionLength1", 0),
+        ByteField("rplReserved1", 0),
+        ByteField("prefixLength1", 0),
+        BitField("prefix1", 0, 128),
+        ByteField("optionType2", 0),
+        ByteField("optionLength2", 0),
+        ByteField("rplReserved2", 0),
+        ByteField("prefixLength2", 0),
+        BitField("prefix2", 0, 128),
+        ByteField("optionType3", 0),
+        ByteField("optionLength3", 0),
+        ByteField("rplReserved3", 0),
+        ByteField("prefixLength3", 0),
+        BitField("prefix3", 0, 128),
+        ByteField("optionType4", 0),
+        ByteField("optionLength4", 0),
+        ByteField("rplReserved4", 0),
+        ByteField("prefixLength4", 0),
+        BitField("prefix4", 0, 128),
+        ByteField("optionType5", 0),
+        ByteField("optionLength5", 0),
+        ByteField("rplReserved5", 0),
+        ByteField("prefixLength5", 0),
+        BitField("prefix5", 0, 128)
+    ]
+
 class Icmpv6_daoack(Packet):
     name = "Icmpv6_daoack"
     fields_desc = [
@@ -198,41 +338,32 @@ bind_layers(IPv6Custom1, Icmpv6_dio)
 
 bind_layers(Ether, Lowpan2, type=0x1002)
 bind_layers(Lowpan2, IPv6Custom2)
-bind_layers(IPv6Custom2, Icmpv6_dio)
+bind_layers(IPv6Custom2, Icmpv6_dao_repeated, payloadLength=44)
+bind_layers(IPv6Custom2, Icmpv6_dao_repeated1, payloadLength=64)
+bind_layers(IPv6Custom2, Icmpv6_dao_repeated2, payloadLength=84)
+bind_layers(IPv6Custom2, Icmpv6_dao_repeated3, payloadLength=104)
+bind_layers(IPv6Custom2, Icmpv6_dao_repeated4, payloadLength=124)
 
 bind_layers(Ether, Lowpan3, type=0x1003)
 bind_layers(Lowpan3, IPv6Custom3)
 bind_layers(IPv6Custom3, Icmpv6_daoack)
 
 
-#bind_layers(IPv6Custom, Icmpv6_dio)
-#bind_layers(IPv6Custom, Icmpv6_dao)
-#bind_layers(IPv6Custom, Icmpv6_daoack)
-#bind_layers(IPv6Custom, Icmpv6_dio, payloadLength=44)
-#bind_layers(IPv6Custom, Icmpv6_dis, payloadLength=6)
-#bind_layers(IPv6Custom, Icmpv6_dao, payloadLength=44)
-#bind_layers(IPv6Custom, Icmpv6_daoack, payloadLength=24)
-
 def decimal_para_binario(numero_decimal):
-    # Verifica se o número é zero
     if numero_decimal == 0:
         return "0"
-
-    # Variável para armazenar o resultado binário
     binario = ""
 
-    # Loop para converter decimal em binário
     while numero_decimal > 0:
         binario = str(numero_decimal % 2) + binario
         numero_decimal = numero_decimal // 2
 
     return binario
 
+
 # Função auxiliar para converter bytes para o formato IPv6
 def convert_to_ipv6(decimal_value):
-    # Converte o valor decimal em 16 bytes
     address_bytes = decimal_value.to_bytes(16, byteorder='big')
-    # Converte para o formato IPv6 legível
     return inet_ntop(socket.AF_INET6, address_bytes)
 
 
@@ -245,6 +376,11 @@ def remove_value_from_lists(d, value):
 def packet_handler(packet):
     global srcAddress
     global rank
+
+    #if Ether in packet:
+    #    ethertype = packet[Ether].type
+    #    print(hex(ethertype))
+
     """if packet.haslayer(Lowpan):
         lowpan_layer = packet.getlayer(Lowpan)
         print("Lowpan Header::::::::::::::::::::")
@@ -286,11 +422,11 @@ def packet_handler(packet):
         print(srcAddress)
 
     if packet.haslayer(Icmpv6_dio):
-        icmpv6_layer = packet.getlayer(Icmpv6_dio)
-        print("::::::::::::::::::::Icmpv6 DIO Header::::::::::::::::::::")
+        #icmpv6_layer = packet.getlayer(Icmpv6_dio)
+        #print("::::::::::::::::::::Icmpv6 DIO Header::::::::::::::::::::")
         #print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
         #print(f"Version: {icmpv6_layer.version}")
-        print(f"Rank: {icmpv6_layer.rank}")
+        #print(f"Rank: {icmpv6_layer.rank}")
         """flags = decimal_para_binario(icmpv6_layer.flags)
         print(f"Flags: {flags}")
         if (flags[0]=="1"):
@@ -309,24 +445,24 @@ def packet_handler(packet):
             print(f" -- Dodag Preference: 0")
         else:
             print(f" -- xxxxxxxxxxxxxxx")"""
-        print(f"DTSN: {icmpv6_layer.DTSN}")
-        dodagid_ipv6 = convert_to_ipv6(icmpv6_layer.DODAGID)
+    #    print(f"DTSN: {icmpv6_layer.DTSN}")
+    #    dodagid_ipv6 = convert_to_ipv6(icmpv6_layer.DODAGID)
         #print(f"DODAGID: {dodagid_ipv6}")
-        print(f"Node: {srcAddress}")
+    #    print(f"Node: {srcAddress}")
         #print(f"Prefix Length: {icmpv6_layer.prefixLength}")
         #print(f"Flag: {icmpv6_layer.flag}")
         #print(f"Route Lifetime: Infinity({icmpv6_layer.routeLifetime})")
-        prefix = convert_to_ipv6(icmpv6_layer.prefix)
+        #prefix = convert_to_ipv6(icmpv6_layer.prefix)
         #print(f"Prefix: {prefix}")
-        print("=========================================\n")
+    #    print("=========================================\n")
 
-        if icmpv6_layer.rank != 0 and srcAddress:
-            remove_value_from_lists(rank, srcAddress)
-            rank[icmpv6_layer.rank].append(srcAddress)
-            srcAddress = ""
+     #   if icmpv6_layer.rank != 0 and srcAddress:
+      #      remove_value_from_lists(rank, srcAddress)
+       #     rank[icmpv6_layer.rank].append(srcAddress)
+        #    srcAddress = ""
 
-    if packet.haslayer(Icmpv6_dao):
-        icmpv6_layer = packet.getlayer(Icmpv6_dao)
+    if packet.haslayer(Icmpv6_dao_repeated):
+        icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated)
         print("::::::::::::::::::::Icmpv6 DAO Header::::::::::::::::::::")
         #print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
         #flags = decimal_para_binario(icmpv6_layer.flag)
@@ -336,13 +472,88 @@ def packet_handler(packet):
         #print(f"DODAGID: {dodagid_ipv6}")
         #print(f"Prefix Length: {icmpv6_layer.prefixLength}")
         #print("=========================================\n")
-        print(srcAddress)
+        rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
+        item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
 
-    if packet.haslayer(Icmpv6_daoack):
+    if packet.haslayer(Icmpv6_dao_repeated1):
+        icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated1)
+        rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
+        item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix1)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix1), convert_to_ipv6(icmpv6_layer.prefix2)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+
+    if packet.haslayer(Icmpv6_dao_repeated2):
+        print("::::::::::::::::::::Icmpv6 DAO Header::::::::::::::::::::")
+        """if ipv6_layer.payloadLength == 84:
+            icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated2)
+            print(f"DODAGID: {convert_to_ipv6(icmpv6_layer.DODAGID)}")
+            print(f"Prefix1: {convert_to_ipv6(icmpv6_layer.prefix1)}")
+            print(f"Prefix2: {convert_to_ipv6(icmpv6_layer.prefix2)}")
+            print(f"Prefix3: {convert_to_ipv6(icmpv6_layer.prefix3)}")
+            print(f"Prefix Length1: {icmpv6_layer.prefixLength1}")
+            print(f"Prefix Length1: {icmpv6_layer.prefixLength2}")
+            print(f"Prefix Length1: {icmpv6_layer.prefixLength3}")
+            print(icmpv6_layer.prefix3)
+        print(srcAddress)"""
+        icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated2)
+        rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
+        item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix1)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix1), convert_to_ipv6(icmpv6_layer.prefix2)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix2), convert_to_ipv6(icmpv6_layer.prefix3)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+
+    if packet.haslayer(Icmpv6_dao_repeated3):
+        print("::::::::::::::::::::Icmpv6 DAO Header::::::::::::::::::::")
+        icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated3)
+        rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
+        item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix1)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix1), convert_to_ipv6(icmpv6_layer.prefix2)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix2), convert_to_ipv6(icmpv6_layer.prefix3)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix3), convert_to_ipv6(icmpv6_layer.prefix4)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+
+    if packet.haslayer(Icmpv6_dao_repeated4):
+        print("::::::::::::::::::::Icmpv6 DAO Header::::::::::::::::::::")
+        icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated4)
+        rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
+        item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix1)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix1), convert_to_ipv6(icmpv6_layer.prefix2)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix2), convert_to_ipv6(icmpv6_layer.prefix3)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix3), convert_to_ipv6(icmpv6_layer.prefix4)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+        item = [convert_to_ipv6(icmpv6_layer.prefix4), convert_to_ipv6(icmpv6_layer.prefix5)]
+        if item not in rank[rootNode]:
+            rank[rootNode].append(item)
+
+    """if packet.haslayer(Icmpv6_daoack):
         #icmpv6_layer = packet.getlayer(Icmpv6_daoack)
         print("::::::::::::::::::::Icmpv6 DAOACK Header::::::::::::::::::::")
         #print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
-        print(srcAddress)
+        print(srcAddress)"""
 
 
 # Função para sniffar pacotes

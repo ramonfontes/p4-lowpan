@@ -976,8 +976,8 @@ header icmpv6_dis_t {
     bit<8> reserved;
 }
 
-header icmpv6_dao_t {
-    bit<8> type;
+header icmpv6_dao_repeated_t {
+bit<8> type;
     bit<8> code;
     bit<16> checksum;
     bit<8> RPLInstanceID;
@@ -990,6 +990,131 @@ header icmpv6_dao_t {
     bit<8> rplReserved;
     bit<8> prefixLength;
     bit<128> prefix;
+}
+
+header icmpv6_dao_repeated1_t {
+    bit<8> type;
+    bit<8> code;
+    bit<16> checksum;
+    bit<8> RPLInstanceID;
+    bit<8> flag;
+    bit<8> reserved;
+    bit<8> seq;
+    bit<128> DODAGID;
+    bit<8> optionType1;
+    bit<8> optionLength1;
+    bit<8> rplReserved1;
+    bit<8> prefixLength1;
+    bit<128> prefix1;
+    bit<8> optionType2;
+    bit<8> optionLength2;
+    bit<8> rplReserved2;
+    bit<8> prefixLength2;
+    bit<128> prefix2;
+}
+
+header icmpv6_dao_repeated2_t {
+bit<8> type;
+    bit<8> code;
+    bit<16> checksum;
+    bit<8> RPLInstanceID;
+    bit<8> flag;
+    bit<8> reserved;
+    bit<8> seq;
+    bit<128> DODAGID;
+    bit<8> optionType1;
+    bit<8> optionLength1;
+    bit<8> rplReserved1;
+    bit<8> prefixLength1;
+    bit<128> prefix1;
+    bit<8> optionType2;
+    bit<8> optionLength2;
+    bit<8> rplReserved2;
+    bit<8> prefixLength2;
+    bit<128> prefix2;
+    bit<8> optionType3;
+    bit<8> optionLength3;
+    bit<8> rplReserved3;
+    bit<8> prefixLength3;
+    bit<128> prefix3;
+}
+
+header icmpv6_dao_repeated3_t {
+bit<8> type;
+    bit<8> code;
+    bit<16> checksum;
+    bit<8> RPLInstanceID;
+    bit<8> flag;
+    bit<8> reserved;
+    bit<8> seq;
+    bit<128> DODAGID;
+    bit<8> optionType1;
+    bit<8> optionLength1;
+    bit<8> rplReserved1;
+    bit<8> prefixLength1;
+    bit<128> prefix1;
+    bit<8> optionType2;
+    bit<8> optionLength2;
+    bit<8> rplReserved2;
+    bit<8> prefixLength2;
+    bit<128> prefix2;
+    bit<8> optionType3;
+    bit<8> optionLength3;
+    bit<8> rplReserved3;
+    bit<8> prefixLength3;
+    bit<128> prefix3;
+    bit<8> optionType4;
+    bit<8> optionLength4;
+    bit<8> rplReserved4;
+    bit<8> prefixLength4;
+    bit<128> prefix4;
+}
+
+header icmpv6_dao_repeated4_t {
+bit<8> type;
+    bit<8> code;
+    bit<16> checksum;
+    bit<8> RPLInstanceID;
+    bit<8> flag;
+    bit<8> reserved;
+    bit<8> seq;
+    bit<128> DODAGID;
+    bit<8> optionType1;
+    bit<8> optionLength1;
+    bit<8> rplReserved1;
+    bit<8> prefixLength1;
+    bit<128> prefix1;
+    bit<8> optionType2;
+    bit<8> optionLength2;
+    bit<8> rplReserved2;
+    bit<8> prefixLength2;
+    bit<128> prefix2;
+    bit<8> optionType3;
+    bit<8> optionLength3;
+    bit<8> rplReserved3;
+    bit<8> prefixLength3;
+    bit<128> prefix3;
+    bit<8> optionType4;
+    bit<8> optionLength4;
+    bit<8> rplReserved4;
+    bit<8> prefixLength4;
+    bit<128> prefix4;
+    bit<8> optionType5;
+    bit<8> optionLength5;
+    bit<8> rplReserved5;
+    bit<8> prefixLength5;
+    bit<128> prefix5;
+}
+
+header icmpv6_dao_t {
+    bit<8> type;
+    bit<8> code;
+    bit<16> checksum;
+    bit<8> RPLInstanceID;
+    bit<8> flag;
+    bit<8> reserved;
+    bit<8> seq;
+    bit<128> DODAGID;
 }
 
 header metadata_t {
@@ -1007,6 +1132,11 @@ struct headers {
     icmpv6_dio_t icmpv6_dio;
     icmpv6_daoack_t icmpv6_daoack;
     icmpv6_dao_t icmpv6_dao;
+    icmpv6_dao_repeated_t icmpv6_dao_repeated;
+    icmpv6_dao_repeated1_t icmpv6_dao_repeated1;
+    icmpv6_dao_repeated2_t icmpv6_dao_repeated2;
+    icmpv6_dao_repeated3_t icmpv6_dao_repeated3;
+    icmpv6_dao_repeated4_t icmpv6_dao_repeated4;
     icmpv6_dis_t icmpv6_dis;
 }
 
@@ -1029,10 +1159,14 @@ parser MyParser(packet_in packet,
 
     state parse_ipv6 {
         packet.extract(hdr.ipv6);
-        transition select(hdr.ipv6.payloadLength, hdr.ipv6.dstAddr) {
+        transition select(hdr.ipv6.payloadLength, hdr.ipv6.srcAddr) {
             (0x2C, 0xff02_0000_0000_0000_0000_0000_0000_001a): parse_icmpv6_dio;
             (0x06, _): parse_icmpv6_dis;
-            (0x2C, _): parse_icmpv6_dao;
+            (0x2C, _): parse_icmpv6_dao_repeated; //44
+            (0x40, _): parse_icmpv6_dao_repeated1; //64
+            (0x54, _): parse_icmpv6_dao_repeated2; //84
+            (0x68, _): parse_icmpv6_dao_repeated3; //104
+            (0x7c, _): parse_icmpv6_dao_repeated4; //124
             (0x18, _): parse_icmpv6_daoack;
             #default: accept;
         }
@@ -1050,15 +1184,39 @@ parser MyParser(packet_in packet,
         transition accept;
     }
 
-    state parse_icmpv6_dao {
-        packet.extract(hdr.icmpv6_dao);
-        meta.meta.custom_value = hdr.icmpv6_dao.code;
+    state parse_icmpv6_dao_repeated {
+        packet.extract(hdr.icmpv6_dao_repeated);
+        meta.meta.custom_value = hdr.icmpv6_dao_repeated.code;
+        transition accept;
+    }
+
+    state parse_icmpv6_dao_repeated1 {
+        packet.extract(hdr.icmpv6_dao_repeated1);
+        meta.meta.custom_value = hdr.icmpv6_dao_repeated1.code;
+        transition accept;
+    }
+
+    state parse_icmpv6_dao_repeated2 {
+        packet.extract(hdr.icmpv6_dao_repeated2);
+        meta.meta.custom_value = hdr.icmpv6_dao_repeated2.code;
+        transition accept;
+    }
+
+    state parse_icmpv6_dao_repeated3 {
+        packet.extract(hdr.icmpv6_dao_repeated3);
+        meta.meta.custom_value = hdr.icmpv6_dao_repeated3.code;
+        transition accept;
+    }
+
+    state parse_icmpv6_dao_repeated4 {
+        packet.extract(hdr.icmpv6_dao_repeated4);
+        meta.meta.custom_value = hdr.icmpv6_dao_repeated4.code;
         transition accept;
     }
 
     state parse_icmpv6_daoack {
         packet.extract(hdr.icmpv6_daoack);
-        meta.meta.custom_value = hdr.icmpv6_daoack.code;
+        meta.meta.custom_value = hdr.icmpv6_daoack.code+1;
         transition accept;
     }
 }
@@ -1084,23 +1242,23 @@ control MyIngress(inout headers hdr,
     }
 
     action set_egress_port(egressSpec_t port) {
-        if (hdr.ipv6.payloadLength == 136){
-            standard_metadata.egress_spec = 0;
-        }
-        else{
-            if (meta.meta.custom_value == 0) {
+        if (meta.meta.custom_value == 0x0 || meta.meta.custom_value == 0x1 || meta.meta.custom_value == 0x2 || meta.meta.custom_value == 0x3){
+            if (meta.meta.custom_value == 0x0) {
                 hdr.ethernet.etherType = 0x1000; //dis
             }
-            else if (meta.meta.custom_value == 1) {
+            else if (meta.meta.custom_value == 0x1) {
                 hdr.ethernet.etherType = 0x1001; //dio
             }
-            else if (meta.meta.custom_value == 2) {
+            else if (meta.meta.custom_value == 0x2) {
                 hdr.ethernet.etherType = 0x1002; //dao
             }
-            else if (meta.meta.custom_value == 3) {
+            else if (meta.meta.custom_value == 0x3) {
                 hdr.ethernet.etherType = 0x1003; //daoack
             }
             standard_metadata.egress_spec = port;
+        }
+        else{
+            standard_metadata.egress_spec = 0;
         }
     }
 
@@ -1158,6 +1316,11 @@ control MyDeparser(packet_out packet, in headers hdr) {
         packet.emit(hdr.ipv6);
         packet.emit(hdr.icmpv6_dio);
         packet.emit(hdr.icmpv6_dao);
+        packet.emit(hdr.icmpv6_dao_repeated);
+        packet.emit(hdr.icmpv6_dao_repeated1);
+        packet.emit(hdr.icmpv6_dao_repeated2);
+        packet.emit(hdr.icmpv6_dao_repeated3);
+        packet.emit(hdr.icmpv6_dao_repeated4);
         packet.emit(hdr.icmpv6_daoack);
         packet.emit(hdr.icmpv6_dis);
     }

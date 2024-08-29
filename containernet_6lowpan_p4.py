@@ -40,6 +40,10 @@ def topology():
                             storing_mode=1)
     sensor4 = net.addSensor('sensor4', ip6='fe80::5/64', panid='0xbeef',
                             storing_mode=1)
+    sensor5 = net.addSensor('sensor5', ip6='fe80::6/64', panid='0xbeef',
+                            storing_mode=1)
+    sensor6 = net.addSensor('sensor6', ip6='fe80::7/64', panid='0xbeef',
+                            storing_mode=1)
 
     h1 = net.addHost('h1',  ip6='fe80::3/64', ip='10.0.0.1')
 
@@ -52,6 +56,8 @@ def topology():
     net.addLink(ap1, sensor2, cls=LoWPAN)
     net.addLink(sensor2, sensor3, cls=LoWPAN)
     net.addLink(sensor3, sensor4, cls=LoWPAN)
+    net.addLink(ap1, sensor5, cls=LoWPAN)
+    net.addLink(sensor1, sensor6, cls=LoWPAN)
     net.addLink(ap1, h1)
     h1.cmd('ifconfig h1-eth1 192.168.0.1')
 
@@ -62,10 +68,9 @@ def topology():
     s1.start([])
     net.staticArp()
 
+    ap1.cmd('tcpdump -i ap1-pan0 -w teste.pcap &')
     makeTerm(h1, title='h1', cmd="bash -c 'python snif.py;'")
     net.configRPLD(net.sensors + net.apsensors)
-
-    #ap1.cmd('tcpdump -i ap1-pan0 -w teste.pcap &')
 
     info('*** Running CLI\n')
     CLI(net)

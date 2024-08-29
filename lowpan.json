@@ -110,6 +110,20 @@
         ["flag", 8, false],
         ["reserved", 8, false],
         ["seq", 8, false],
+        ["DODAGID", 128, false]
+      ]
+    },
+    {
+      "name" : "icmpv6_dao_repeated_t",
+      "id" : 8,
+      "fields" : [
+        ["type", 8, false],
+        ["code", 8, false],
+        ["checksum", 16, false],
+        ["RPLInstanceID", 8, false],
+        ["flag", 8, false],
+        ["reserved", 8, false],
+        ["seq", 8, false],
         ["DODAGID", 128, false],
         ["optionType", 8, false],
         ["optionLength", 8, false],
@@ -119,8 +133,134 @@
       ]
     },
     {
+      "name" : "icmpv6_dao_repeated1_t",
+      "id" : 9,
+      "fields" : [
+        ["type", 8, false],
+        ["code", 8, false],
+        ["checksum", 16, false],
+        ["RPLInstanceID", 8, false],
+        ["flag", 8, false],
+        ["reserved", 8, false],
+        ["seq", 8, false],
+        ["DODAGID", 128, false],
+        ["optionType1", 8, false],
+        ["optionLength1", 8, false],
+        ["rplReserved1", 8, false],
+        ["prefixLength1", 8, false],
+        ["prefix1", 128, false],
+        ["optionType2", 8, false],
+        ["optionLength2", 8, false],
+        ["rplReserved2", 8, false],
+        ["prefixLength2", 8, false],
+        ["prefix2", 128, false]
+      ]
+    },
+    {
+      "name" : "icmpv6_dao_repeated2_t",
+      "id" : 10,
+      "fields" : [
+        ["type", 8, false],
+        ["code", 8, false],
+        ["checksum", 16, false],
+        ["RPLInstanceID", 8, false],
+        ["flag", 8, false],
+        ["reserved", 8, false],
+        ["seq", 8, false],
+        ["DODAGID", 128, false],
+        ["optionType1", 8, false],
+        ["optionLength1", 8, false],
+        ["rplReserved1", 8, false],
+        ["prefixLength1", 8, false],
+        ["prefix1", 128, false],
+        ["optionType2", 8, false],
+        ["optionLength2", 8, false],
+        ["rplReserved2", 8, false],
+        ["prefixLength2", 8, false],
+        ["prefix2", 128, false],
+        ["optionType3", 8, false],
+        ["optionLength3", 8, false],
+        ["rplReserved3", 8, false],
+        ["prefixLength3", 8, false],
+        ["prefix3", 128, false]
+      ]
+    },
+    {
+      "name" : "icmpv6_dao_repeated3_t",
+      "id" : 11,
+      "fields" : [
+        ["type", 8, false],
+        ["code", 8, false],
+        ["checksum", 16, false],
+        ["RPLInstanceID", 8, false],
+        ["flag", 8, false],
+        ["reserved", 8, false],
+        ["seq", 8, false],
+        ["DODAGID", 128, false],
+        ["optionType1", 8, false],
+        ["optionLength1", 8, false],
+        ["rplReserved1", 8, false],
+        ["prefixLength1", 8, false],
+        ["prefix1", 128, false],
+        ["optionType2", 8, false],
+        ["optionLength2", 8, false],
+        ["rplReserved2", 8, false],
+        ["prefixLength2", 8, false],
+        ["prefix2", 128, false],
+        ["optionType3", 8, false],
+        ["optionLength3", 8, false],
+        ["rplReserved3", 8, false],
+        ["prefixLength3", 8, false],
+        ["prefix3", 128, false],
+        ["optionType4", 8, false],
+        ["optionLength4", 8, false],
+        ["rplReserved4", 8, false],
+        ["prefixLength4", 8, false],
+        ["prefix4", 128, false]
+      ]
+    },
+    {
+      "name" : "icmpv6_dao_repeated4_t",
+      "id" : 12,
+      "fields" : [
+        ["type", 8, false],
+        ["code", 8, false],
+        ["checksum", 16, false],
+        ["RPLInstanceID", 8, false],
+        ["flag", 8, false],
+        ["reserved", 8, false],
+        ["seq", 8, false],
+        ["DODAGID", 128, false],
+        ["optionType1", 8, false],
+        ["optionLength1", 8, false],
+        ["rplReserved1", 8, false],
+        ["prefixLength1", 8, false],
+        ["prefix1", 128, false],
+        ["optionType2", 8, false],
+        ["optionLength2", 8, false],
+        ["rplReserved2", 8, false],
+        ["prefixLength2", 8, false],
+        ["prefix2", 128, false],
+        ["optionType3", 8, false],
+        ["optionLength3", 8, false],
+        ["rplReserved3", 8, false],
+        ["prefixLength3", 8, false],
+        ["prefix3", 128, false],
+        ["optionType4", 8, false],
+        ["optionLength4", 8, false],
+        ["rplReserved4", 8, false],
+        ["prefixLength4", 8, false],
+        ["prefix4", 128, false],
+        ["optionType5", 8, false],
+        ["optionLength5", 8, false],
+        ["rplReserved5", 8, false],
+        ["prefixLength5", 8, false],
+        ["prefix5", 128, false]
+      ]
+    },
+    {
       "name" : "icmpv6_dis_t",
-      "id" : 8,
+      "id" : 13,
       "fields" : [
         ["type", 8, false],
         ["code", 8, false],
@@ -131,7 +271,7 @@
     },
     {
       "name" : "metadata_t",
-      "id" : 9,
+      "id" : 14,
       "fields" : [
         ["custom_value", 8, false]
       ]
@@ -195,15 +335,50 @@
       "pi_omit" : true
     },
     {
-      "name" : "icmpv6_dis",
+      "name" : "icmpv6_dao_repeated",
       "id" : 8,
+      "header_type" : "icmpv6_dao_repeated_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "icmpv6_dao_repeated1",
+      "id" : 9,
+      "header_type" : "icmpv6_dao_repeated1_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "icmpv6_dao_repeated2",
+      "id" : 10,
+      "header_type" : "icmpv6_dao_repeated2_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "icmpv6_dao_repeated3",
+      "id" : 11,
+      "header_type" : "icmpv6_dao_repeated3_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "icmpv6_dao_repeated4",
+      "id" : 12,
+      "header_type" : "icmpv6_dao_repeated4_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "icmpv6_dis",
+      "id" : 13,
       "header_type" : "icmpv6_dis_t",
       "metadata" : false,
       "pi_omit" : true
     },
     {
       "name" : "userMetadata.meta",
-      "id" : 9,
+      "id" : 14,
       "header_type" : "metadata_t",
       "metadata" : false,
       "pi_omit" : true
@@ -296,7 +471,31 @@
               "type" : "hexstr",
               "value" : "0x002c00000000000000000000000000000000",
               "mask" : "0xffff00000000000000000000000000000000",
-              "next_state" : "parse_icmpv6_dao"
+              "next_state" : "parse_icmpv6_dao_repeated"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x004000000000000000000000000000000000",
+              "mask" : "0xffff00000000000000000000000000000000",
+              "next_state" : "parse_icmpv6_dao_repeated1"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x005400000000000000000000000000000000",
+              "mask" : "0xffff00000000000000000000000000000000",
+              "next_state" : "parse_icmpv6_dao_repeated2"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x006800000000000000000000000000000000",
+              "mask" : "0xffff00000000000000000000000000000000",
+              "next_state" : "parse_icmpv6_dao_repeated3"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x007c00000000000000000000000000000000",
+              "mask" : "0xffff00000000000000000000000000000000",
+              "next_state" : "parse_icmpv6_dao_repeated4"
             },
             {
               "type" : "hexstr",
@@ -312,7 +511,7 @@
             },
             {
               "type" : "field",
-              "value" : ["ipv6", "dstAddr"]
+              "value" : ["ipv6", "srcAddr"]
             }
           ]
         },
@@ -391,14 +590,14 @@
           "transition_key" : []
         },
         {
-          "name" : "parse_icmpv6_dao",
+          "name" : "parse_icmpv6_dao_repeated",
           "id" : 4,
           "parser_ops" : [
             {
               "parameters" : [
                 {
                   "type" : "regular",
-                  "value" : "icmpv6_dao"
+                  "value" : "icmpv6_dao_repeated"
                 }
               ],
               "op" : "extract"
@@ -411,7 +610,155 @@
                 },
                 {
                   "type" : "field",
-                  "value" : ["icmpv6_dao", "code"]
+                  "value" : ["icmpv6_dao_repeated", "code"]
+                }
+              ],
+              "op" : "set"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : []
+        },
+        {
+          "name" : "parse_icmpv6_dao_repeated1",
+          "id" : 5,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "icmpv6_dao_repeated1"
+                }
+              ],
+              "op" : "extract"
+            },
+            {
+              "parameters" : [
+                {
+                  "type" : "field",
+                  "value" : ["userMetadata.meta", "custom_value"]
+                },
+                {
+                  "type" : "field",
+                  "value" : ["icmpv6_dao_repeated1", "code"]
+                }
+              ],
+              "op" : "set"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : []
+        },
+        {
+          "name" : "parse_icmpv6_dao_repeated2",
+          "id" : 6,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "icmpv6_dao_repeated2"
+                }
+              ],
+              "op" : "extract"
+            },
+            {
+              "parameters" : [
+                {
+                  "type" : "field",
+                  "value" : ["userMetadata.meta", "custom_value"]
+                },
+                {
+                  "type" : "field",
+                  "value" : ["icmpv6_dao_repeated2", "code"]
+                }
+              ],
+              "op" : "set"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : []
+        },
+        {
+          "name" : "parse_icmpv6_dao_repeated3",
+          "id" : 7,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "icmpv6_dao_repeated3"
+                }
+              ],
+              "op" : "extract"
+            },
+            {
+              "parameters" : [
+                {
+                  "type" : "field",
+                  "value" : ["userMetadata.meta", "custom_value"]
+                },
+                {
+                  "type" : "field",
+                  "value" : ["icmpv6_dao_repeated3", "code"]
+                }
+              ],
+              "op" : "set"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : []
+        },
+        {
+          "name" : "parse_icmpv6_dao_repeated4",
+          "id" : 8,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "icmpv6_dao_repeated4"
+                }
+              ],
+              "op" : "extract"
+            },
+            {
+              "parameters" : [
+                {
+                  "type" : "field",
+                  "value" : ["userMetadata.meta", "custom_value"]
+                },
+                {
+                  "type" : "field",
+                  "value" : ["icmpv6_dao_repeated4", "code"]
                 }
               ],
               "op" : "set"
@@ -429,7 +776,7 @@
         },
         {
           "name" : "parse_icmpv6_daoack",
-          "id" : 5,
+          "id" : 9,
           "parser_ops" : [
             {
               "parameters" : [
@@ -447,8 +794,31 @@
                   "value" : ["userMetadata.meta", "custom_value"]
                 },
                 {
-                  "type" : "field",
-                  "value" : ["icmpv6_daoack", "code"]
+                  "type" : "expression",
+                  "value" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "&",
+                      "left" : {
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "+",
+                          "left" : {
+                            "type" : "field",
+                            "value" : ["icmpv6_daoack", "code"]
+                          },
+                          "right" : {
+                            "type" : "hexstr",
+                            "value" : "0x01"
+                          }
+                        }
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0xff"
+                      }
+                    }
+                  }
                 }
               ],
               "op" : "set"
@@ -474,11 +844,11 @@
       "id" : 0,
       "source_info" : {
         "filename" : "lowpan.p4",
-        "line" : 271,
+        "line" : 429,
         "column" : 8,
         "source_fragment" : "MyDeparser"
       },
-      "order" : ["ethernet", "lowpan", "ipv6", "icmpv6_dio", "icmpv6_dao", "icmpv6_daoack", "icmpv6_dis"],
+      "order" : ["ethernet", "lowpan", "ipv6", "icmpv6_dio", "icmpv6_dao", "icmpv6_dao_repeated", "icmpv6_dao_repeated1", "icmpv6_dao_repeated2", "icmpv6_dao_repeated3", "icmpv6_dao_repeated4", "icmpv6_daoack", "icmpv6_dis"],
       "primitives" : []
     }
   ],
@@ -503,7 +873,7 @@
           ],
           "source_info" : {
             "filename" : "lowpan.p4",
-            "line" : 200,
+            "line" : 358,
             "column" : 8,
             "source_fragment" : "mark_to_drop(standard_metadata)"
           }
@@ -525,46 +895,6 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["standard_metadata", "egress_spec"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "?",
-                  "left" : {
-                    "type" : "hexstr",
-                    "value" : "0x0000"
-                  },
-                  "right" : {
-                    "type" : "field",
-                    "value" : ["standard_metadata", "egress_spec"]
-                  },
-                  "cond" : {
-                    "type" : "expression",
-                    "value" : {
-                      "op" : "==",
-                      "left" : {
-                        "type" : "field",
-                        "value" : ["ipv6", "payloadLength"]
-                      },
-                      "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0088"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "op" : "assign",
-          "parameters" : [
-            {
-              "type" : "field",
               "value" : ["ethernet", "etherType"]
             },
             {
@@ -574,10 +904,6 @@
                 "value" : {
                   "op" : "?",
                   "left" : {
-                    "type" : "field",
-                    "value" : ["ethernet", "etherType"]
-                  },
-                  "right" : {
                     "type" : "expression",
                     "value" : {
                       "op" : "?",
@@ -605,17 +931,81 @@
                       }
                     }
                   },
+                  "right" : {
+                    "type" : "field",
+                    "value" : ["ethernet", "etherType"]
+                  },
                   "cond" : {
                     "type" : "expression",
                     "value" : {
-                      "op" : "==",
+                      "op" : "or",
                       "left" : {
-                        "type" : "field",
-                        "value" : ["ipv6", "payloadLength"]
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "or",
+                          "left" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "or",
+                              "left" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x00"
+                                  }
+                                }
+                              },
+                              "right" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x01"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "right" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "==",
+                              "left" : {
+                                "type" : "field",
+                                "value" : ["userMetadata.meta", "custom_value"]
+                              },
+                              "right" : {
+                                "type" : "hexstr",
+                                "value" : "0x02"
+                              }
+                            }
+                          }
+                        }
                       },
                       "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0088"
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "==",
+                          "left" : {
+                            "type" : "field",
+                            "value" : ["userMetadata.meta", "custom_value"]
+                          },
+                          "right" : {
+                            "type" : "hexstr",
+                            "value" : "0x03"
+                          }
+                        }
                       }
                     }
                   }
@@ -638,10 +1028,6 @@
                 "value" : {
                   "op" : "?",
                   "left" : {
-                    "type" : "field",
-                    "value" : ["ethernet", "etherType"]
-                  },
-                  "right" : {
                     "type" : "expression",
                     "value" : {
                       "op" : "?",
@@ -693,17 +1079,81 @@
                       }
                     }
                   },
+                  "right" : {
+                    "type" : "field",
+                    "value" : ["ethernet", "etherType"]
+                  },
                   "cond" : {
                     "type" : "expression",
                     "value" : {
-                      "op" : "==",
+                      "op" : "or",
                       "left" : {
-                        "type" : "field",
-                        "value" : ["ipv6", "payloadLength"]
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "or",
+                          "left" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "or",
+                              "left" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x00"
+                                  }
+                                }
+                              },
+                              "right" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x01"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "right" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "==",
+                              "left" : {
+                                "type" : "field",
+                                "value" : ["userMetadata.meta", "custom_value"]
+                              },
+                              "right" : {
+                                "type" : "hexstr",
+                                "value" : "0x02"
+                              }
+                            }
+                          }
+                        }
                       },
                       "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0088"
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "==",
+                          "left" : {
+                            "type" : "field",
+                            "value" : ["userMetadata.meta", "custom_value"]
+                          },
+                          "right" : {
+                            "type" : "hexstr",
+                            "value" : "0x03"
+                          }
+                        }
                       }
                     }
                   }
@@ -726,10 +1176,6 @@
                 "value" : {
                   "op" : "?",
                   "left" : {
-                    "type" : "field",
-                    "value" : ["ethernet", "etherType"]
-                  },
-                  "right" : {
                     "type" : "expression",
                     "value" : {
                       "op" : "?",
@@ -805,17 +1251,81 @@
                       }
                     }
                   },
+                  "right" : {
+                    "type" : "field",
+                    "value" : ["ethernet", "etherType"]
+                  },
                   "cond" : {
                     "type" : "expression",
                     "value" : {
-                      "op" : "==",
+                      "op" : "or",
                       "left" : {
-                        "type" : "field",
-                        "value" : ["ipv6", "payloadLength"]
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "or",
+                          "left" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "or",
+                              "left" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x00"
+                                  }
+                                }
+                              },
+                              "right" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x01"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "right" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "==",
+                              "left" : {
+                                "type" : "field",
+                                "value" : ["userMetadata.meta", "custom_value"]
+                              },
+                              "right" : {
+                                "type" : "hexstr",
+                                "value" : "0x02"
+                              }
+                            }
+                          }
+                        }
                       },
                       "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0088"
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "==",
+                          "left" : {
+                            "type" : "field",
+                            "value" : ["userMetadata.meta", "custom_value"]
+                          },
+                          "right" : {
+                            "type" : "hexstr",
+                            "value" : "0x03"
+                          }
+                        }
                       }
                     }
                   }
@@ -838,10 +1348,6 @@
                 "value" : {
                   "op" : "?",
                   "left" : {
-                    "type" : "field",
-                    "value" : ["ethernet", "etherType"]
-                  },
-                  "right" : {
                     "type" : "expression",
                     "value" : {
                       "op" : "?",
@@ -941,17 +1447,81 @@
                       }
                     }
                   },
+                  "right" : {
+                    "type" : "field",
+                    "value" : ["ethernet", "etherType"]
+                  },
                   "cond" : {
                     "type" : "expression",
                     "value" : {
-                      "op" : "==",
+                      "op" : "or",
                       "left" : {
-                        "type" : "field",
-                        "value" : ["ipv6", "payloadLength"]
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "or",
+                          "left" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "or",
+                              "left" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x00"
+                                  }
+                                }
+                              },
+                              "right" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x01"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "right" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "==",
+                              "left" : {
+                                "type" : "field",
+                                "value" : ["userMetadata.meta", "custom_value"]
+                              },
+                              "right" : {
+                                "type" : "hexstr",
+                                "value" : "0x02"
+                              }
+                            }
+                          }
+                        }
                       },
                       "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0088"
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "==",
+                          "left" : {
+                            "type" : "field",
+                            "value" : ["userMetadata.meta", "custom_value"]
+                          },
+                          "right" : {
+                            "type" : "hexstr",
+                            "value" : "0x03"
+                          }
+                        }
                       }
                     }
                   }
@@ -974,24 +1544,84 @@
                 "value" : {
                   "op" : "?",
                   "left" : {
-                    "type" : "field",
-                    "value" : ["standard_metadata", "egress_spec"]
-                  },
-                  "right" : {
                     "type" : "local",
                     "value" : 0
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0x0000"
                   },
                   "cond" : {
                     "type" : "expression",
                     "value" : {
-                      "op" : "==",
+                      "op" : "or",
                       "left" : {
-                        "type" : "field",
-                        "value" : ["ipv6", "payloadLength"]
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "or",
+                          "left" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "or",
+                              "left" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x00"
+                                  }
+                                }
+                              },
+                              "right" : {
+                                "type" : "expression",
+                                "value" : {
+                                  "op" : "==",
+                                  "left" : {
+                                    "type" : "field",
+                                    "value" : ["userMetadata.meta", "custom_value"]
+                                  },
+                                  "right" : {
+                                    "type" : "hexstr",
+                                    "value" : "0x01"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "right" : {
+                            "type" : "expression",
+                            "value" : {
+                              "op" : "==",
+                              "left" : {
+                                "type" : "field",
+                                "value" : ["userMetadata.meta", "custom_value"]
+                              },
+                              "right" : {
+                                "type" : "hexstr",
+                                "value" : "0x02"
+                              }
+                            }
+                          }
+                        }
                       },
                       "right" : {
-                        "type" : "hexstr",
-                        "value" : "0x0088"
+                        "type" : "expression",
+                        "value" : {
+                          "op" : "==",
+                          "left" : {
+                            "type" : "field",
+                            "value" : ["userMetadata.meta", "custom_value"]
+                          },
+                          "right" : {
+                            "type" : "hexstr",
+                            "value" : "0x03"
+                          }
+                        }
                       }
                     }
                   }
@@ -1003,7 +1633,7 @@
       ]
     },
     {
-      "name" : "lowpan237",
+      "name" : "lowpan395",
       "id" : 2,
       "runtime_data" : [],
       "primitives" : [
@@ -1017,7 +1647,7 @@
           ],
           "source_info" : {
             "filename" : "lowpan.p4",
-            "line" : 237,
+            "line" : 395,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.setValid()"
           }
@@ -1031,18 +1661,18 @@
       "id" : 0,
       "source_info" : {
         "filename" : "lowpan.p4",
-        "line" : 195,
+        "line" : 353,
         "column" : 8,
         "source_fragment" : "MyIngress"
       },
-      "init_table" : "tbl_lowpan237",
+      "init_table" : "tbl_lowpan395",
       "tables" : [
         {
-          "name" : "tbl_lowpan237",
+          "name" : "tbl_lowpan395",
           "id" : 0,
           "source_info" : {
             "filename" : "lowpan.p4",
-            "line" : 237,
+            "line" : 395,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.setValid()"
           },
@@ -1054,10 +1684,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [2],
-          "actions" : ["lowpan237"],
+          "actions" : ["lowpan395"],
           "base_default_next" : "MyIngress.port_table",
           "next_tables" : {
-            "lowpan237" : "MyIngress.port_table"
+            "lowpan395" : "MyIngress.port_table"
           },
           "default_entry" : {
             "action_id" : 2,
@@ -1071,7 +1701,7 @@
           "id" : 1,
           "source_info" : {
             "filename" : "lowpan.p4",
-            "line" : 224,
+            "line" : 382,
             "column" : 10,
             "source_fragment" : "port_table"
           },
@@ -1112,7 +1742,7 @@
       "id" : 1,
       "source_info" : {
         "filename" : "lowpan.p4",
-        "line" : 251,
+        "line" : 409,
         "column" : 8,
         "source_fragment" : "MyEgress"
       },
