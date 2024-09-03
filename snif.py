@@ -8,6 +8,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 rank = defaultdict(list)
+packet_size = defaultdict(list)
 srcAddress = ""
 rootNode = ""
 
@@ -17,6 +18,10 @@ log.setLevel(logging.ERROR)
 @app.route('/api', methods=['GET'])
 def api_home():
     return jsonify(dict(rank))
+
+@app.route('/api/packet_size', methods=['GET'])
+def api_packet_size():
+    return jsonify(dict(packet_size))
 
 @app.route('/api/data', methods=['POST'])
 def api_data():
@@ -373,15 +378,24 @@ def remove_value_from_lists(d, value):
             d[key] = [x for x in d[key] if x != value]
 
 
+def set_packet_size(srcAddress, packet):
+    global packet_size
+    if (srcAddress != "::"):
+        if srcAddress in packet_size:
+            packet_size[srcAddress] += len(packet)
+        else:
+            packet_size[srcAddress] = len(packet)
+
+
 def packet_handler(packet):
     global srcAddress
     global rank
 
-    #if Ether in packet:
-    #    ethertype = packet[Ether].type
-    #    print(hex(ethertype))
+    """if Ether in packet:
+        #ethertype = packet[Ether].type
+        #print(hex(ethertype))
 
-    """if packet.haslayer(Lowpan):
+    if packet.haslayer(Lowpan):
         lowpan_layer = packet.getlayer(Lowpan)
         print("Lowpan Header::::::::::::::::::::")
         print(f"Dispatch: {lowpan_layer.dispatch}")
@@ -392,28 +406,23 @@ def packet_handler(packet):
 
     if packet.haslayer(IPv6Custom):
         ipv6_layer = packet.getlayer(IPv6Custom)
-        #print("::::::::::::::::::::IPv6 Header::::::::::::::::::::::")
-        #print(f"Version: {ipv6_layer.version}")
-        #print(f"Traffic Class: {ipv6_layer.trafficClass}")
-        #print(f"Flow Label: {ipv6_layer.flowLabel}")
-        #print(f"Payload Length: {ipv6_layer.payloadLength}")
-        #print(f"Next Header: {ipv6_layer.nextHeader}")
-        #print(f"Hop Limit: {ipv6_layer.hopLimit}")
-        #print(f"Src Addr: {ipv6_layer.srcAddr}")
-        #print(f"Dst Addr: {ipv6_layer.dstAddr}\n")
         srcAddress = ipv6_layer.srcAddr
+        set_packet_size(srcAddress, packet)
 
     if packet.haslayer(IPv6Custom1):
         ipv6_layer = packet.getlayer(IPv6Custom1)
         srcAddress = ipv6_layer.srcAddr
+        set_packet_size(srcAddress, packet)
 
     if packet.haslayer(IPv6Custom2):
         ipv6_layer = packet.getlayer(IPv6Custom2)
         srcAddress = ipv6_layer.srcAddr
+        set_packet_size(srcAddress, packet)
 
     if packet.haslayer(IPv6Custom3):
         ipv6_layer = packet.getlayer(IPv6Custom3)
         srcAddress = ipv6_layer.srcAddr
+        set_packet_size(srcAddress, packet)
 
     if packet.haslayer(Icmpv6_dis):
         icmpv6_layer = packet.getlayer(Icmpv6_dis)
@@ -456,22 +465,10 @@ def packet_handler(packet):
         #print(f"Prefix: {prefix}")
     #    print("=========================================\n")
 
-     #   if icmpv6_layer.rank != 0 and srcAddress:
-      #      remove_value_from_lists(rank, srcAddress)
-       #     rank[icmpv6_layer.rank].append(srcAddress)
-        #    srcAddress = ""
 
     if packet.haslayer(Icmpv6_dao_repeated):
         icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated)
         print("::::::::::::::::::::Icmpv6 DAO Header::::::::::::::::::::")
-        #print(f"RPLInstanceID: {icmpv6_layer.RPLInstanceID}")
-        #flags = decimal_para_binario(icmpv6_layer.flag)
-        #print(f"Flags: {flags}")
-        #print(f"Reserved: {icmpv6_layer.reserved}")
-        #dodagid_ipv6 = convert_to_ipv6(icmpv6_layer.DODAGID)
-        #print(f"DODAGID: {dodagid_ipv6}")
-        #print(f"Prefix Length: {icmpv6_layer.prefixLength}")
-        #print("=========================================\n")
         rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
         item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix)]
         if item not in rank[rootNode]:
