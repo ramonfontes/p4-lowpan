@@ -6,9 +6,8 @@ var DIR = "./img/";
 var EDGE_LENGTH_MAIN = 150;
 var EDGE_LENGTH_SUB = 50;
 
-
-//var nodes = new vis.DataSet([]);
-//var edges = new vis.DataSet([]);
+var alertShown = false;
+var isConnected = false
 var isInteracting = false;
 var prev_state = [];
 var curr_state = [];
@@ -33,28 +32,12 @@ function processData(rank) {
         if (!(from in nodeIds)) {
             nodeIds[from] = idCounter++;
             label = from;
-            if (index == 0){
-                label = "P4-enabled\n6LoWPAN (root)";
-                nodes.push({
-                    id: nodeIds[from],
-                    label: label, // O label é o value
-                    //image: DIR + "icon.png", // Escolha a imagem apropriada
-                    borderWidth: 3,
-                    //shape: "database",
-                    color: "orange",
-                    //shape: "image",
-                });
-            }
-            else{
-                nodes.push({
-                    id: nodeIds[from],
-                    label: label.substring(label.length - 14), // O label é o value
-                    //image: DIR + "icon.png", // Escolha a imagem apropriada
-                    borderWidth: 3,
-                    //shape: "database",
-                    //shape: "image",
-                });
-            }
+            nodes.push({
+                id: nodeIds[from],
+                label: key == label ? "P4-enabled Root\n" + label : label,
+                borderWidth: 3,
+                color: key == label ? "orange" : undefined,
+            });
         }
 
         if (!(to in nodeIds)) {
@@ -62,16 +45,13 @@ function processData(rank) {
             label = to
             nodes.push({
                 id: nodeIds[to],
-                label: label.substring(label.length - 14), // O label é o value
-                //image: DIR + "icon.png", // Escolha a imagem apropriada
+                label: key == label ? "P4-enabled Root\n" + label : label,
                 borderWidth: 3,
-                //shape: "database",
-                //color: "orange",
-                //shape: "image",
+                color: key == label ? "orange" : undefined,
             });
         }
 
-        edges.push({ from: nodeIds[from], to: nodeIds[to], color: "black", width: 1, length: EDGE_LENGTH_MAIN });
+        edges.push({ from: nodeIds[from], to: nodeIds[to], color: "black", width: 1, dashes: true, length: EDGE_LENGTH_MAIN });
     });
     }
 }
@@ -100,42 +80,80 @@ function processPacketSize(data) {
 
             // Adicionando a linha na tabela
             tabelaBody.appendChild(row);
+
+            const rowsArray = Array.from(tabelaBody.rows);
+
+            rowsArray.sort((rowA, rowB) => {
+                const textA = rowA.cells[0].textContent.trim().replace(/[^0-9.]/g, '');
+                const textB = rowB.cells[0].textContent.trim().replace(/[^0-9.]/g, '');
+
+                // Converte para números para comparação
+                const numA = parseFloat(textA);
+                const numB = parseFloat(textB);
+
+                // Ordena numericamente
+                return numA - numB;
+            });
+
+            // Remove todas as linhas do tbody
+            while (tabelaBody.firstChild) {
+                tabelaBody.removeChild(tabelaBody.firstChild);
+            }
+            console.log(rowsArray);
+            // Adiciona as linhas ordenadas de volta ao tbody
+            rowsArray.forEach(row => tabelaBody.appendChild(row));
         }
   }
 }
 
-function exportToSVG() {
-  const container = document.getElementById("mynetwork");
-
-  domtoimage.toSvg(container)
-    .then(function (dataUrl) {
-      // Create a link element to download the SVG
-      var link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'network-visualization.svg';
-      link.click();
-    })
-    .catch(function (error) {
-      console.error('Oops, something went wrong!', error);
-    });
+function handleError(error) {
+    console.error("An error occurred:", error);
+    if (!alertShown) {
+        alert("An error occurred:", error);
+        alertShown = true;  // Marcar que o alerta já foi mostrado
+    }
 }
 
-document.getElementById("exportButton").addEventListener("click", exportToSVG);
+function handleOffline() {
+    if (!alertShown) {
+        alert("The system is offline");
+        alertShown = true;  // Marcar que o alerta já foi mostrado
+    }
+}
 
 // Função principal para desenhar o grafo
-function draw() {
+async function draw() {
   // Defina o IP e a porta do servidor Flask
-  const serverIp = '10.0.0.1';
+  const serverIp = '192.168.210.1';
   const serverPort = '5000';
-
+  isConnected = false;
   // Construa a URL completa da requisição
   const url = `http://${serverIp}:${serverPort}/api`;
   const url_packet_size = `http://${serverIp}:${serverPort}/api/packet_size`;
-  // Faça a requisição para a API
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      processData(data);
+
+  const controller = new AbortController();
+  const signal = controller.signal;
+  timeout = 1000;
+
+    // Cria um timeout para abortar a requisição se demorar mais que o limite
+    const fetchTimeout = setTimeout(() => {
+        controller.abort();
+    }, timeout);
+
+      // Faça a requisição para a API
+       await fetch(url, { signal })
+        .then(response => {
+            if (!response.ok) {
+                handleError;
+            }
+            else{
+                clearTimeout(fetchTimeout);
+                isConnected = true;
+            }
+            return response.json();
+        })
+        .then(data => {
+          processData(data);
 
       if (!network) {
           // Criar a rede de visualização
@@ -158,18 +176,41 @@ function draw() {
         if (!isInteracting){
             // Atualiza a rede existente com os novos dados
             network.setData({
-            nodes: nodes,
-            edges: edges
+                nodes: nodes,
+                edges: edges
             });
         }
       }
-    });
+    }).
+    catch (handleError)
 
-    fetch(url_packet_size)
-    .then(response => response.json())
+    await fetch(url_packet_size, { signal })
+    .then(response => {
+        if (!response.ok) {
+            handleError;
+        }
+        return response.json();
+    })
     .then(data => {
-      processPacketSize(data);
-    });
+        processPacketSize(data);
+    })
+    .catch(handleError);
+
+    if (!isConnected){
+        nodes = null;
+        edges = null;
+        if (network)
+            network.setData({
+                nodes: nodes,
+                edges: edges
+            });
+        const tabelaBody = document.querySelector('#packet_size tbody');
+        // Limpar o conteúdo do <tbody>
+        tabelaBody.innerHTML = '';
+        isConnected = true;
+        alertShown = false;
+        handleOffline();
+    }
 }
 
 window.addEventListener("load", () => {
