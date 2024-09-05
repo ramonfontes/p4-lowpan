@@ -77,9 +77,9 @@ def topology():
     net.staticArp()
 
     if '-s' in sys.argv:
-        makeTerm(h1, title='h1', cmd="bash -c 'python snif-storing.py;'")
+        makeTerm(h1, title='h1', cmd="bash -c 'python packet-processing-storing.py;'")
     else:
-        makeTerm(h1, title='h1', cmd="bash -c 'python snif-non-storing.py;'")
+        makeTerm(h1, title='h1', cmd="bash -c 'python packet-processing-non-storing.py;'")
     net.configRPLD(net.sensors + net.apsensors)
 
     info('*** Running CLI\n')
