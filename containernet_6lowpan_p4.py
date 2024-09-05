@@ -19,13 +19,13 @@ def topology():
     info('*** Adding docker containers\n')
     path = os.path.dirname(os.path.abspath(__file__))
     json_file = '/root/lowpan-non-storing.json' # container directory
-    config = path + '/commands_lowpan.txt'
+    config = path + '/p4_commands.txt'
     args = {'json': json_file, 'switch_config': config}
     mode = 1
     dimage = 'ramonfontes/bmv2:lowpan'
     if '-s' in sys.argv:
-        json_file = '/root/lowpan-storing.json'  # container directory
-        config = path + '/commands_lowpan.txt'
+        json_file = '/root/json/lowpan-storing.json'  # container directory
+        config = path + '/p4_commands.txt'
         args = {'json': json_file, 'switch_config': config}
         mode = 2
         dimage = 'ramonfontes/bmv2:lowpan-storing'
