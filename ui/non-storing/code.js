@@ -1,17 +1,12 @@
 var nodes = null;
 var edges = null;
 var network = null;
-
-var DIR = "./img/";
-var EDGE_LENGTH_MAIN = 150;
-var EDGE_LENGTH_SUB = 50;
-
 var alertShown = false;
-var isConnected = false
+var isConnected = false;
 var isInteracting = false;
+var EDGE_LENGTH_MAIN = 150;
 var prev_state = [];
 var curr_state = [];
-
 var packet_size_nodes = [];
 
 // Função para criar nós e arestas com base nos dados recebidos
@@ -34,7 +29,7 @@ function processData(rank) {
             label = from;
             nodes.push({
                 id: nodeIds[from],
-                label: key == label ? "P4-enabled Root\n" + label : label,
+                label: key == label ? "P4-enabled Root\n" + label : label.substring(label.length - 14),
                 borderWidth: 3,
                 color: key == label ? "orange" : undefined,
             });
@@ -45,7 +40,7 @@ function processData(rank) {
             label = to
             nodes.push({
                 id: nodeIds[to],
-                label: key == label ? "P4-enabled Root\n" + label : label,
+                label: key == label ? "P4-enabled Root\n" + label : label.substring(label.length - 14),
                 borderWidth: 3,
                 color: key == label ? "orange" : undefined,
             });
