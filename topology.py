@@ -38,46 +38,49 @@ def topology():
     ap1 = net.addAPSensor('ap1', cls=DockerP4Sensor, ip6='fe80::1/64', panid='0xbeef',
                            dodag_root=True, storing_mode=mode, privileged=True,
                            volumes=[path + "/:/root", "/tmp/.X11-unix:/tmp/.X11-unix:rw"],
-                           dimage=dimage, cpu_shares=20, netcfg=True,
+                           dimage=dimage, cpu_shares=20, netcfg=True, trickle_t=5,
                            environment={"DISPLAY": ":0"}, loglevel="info",
                            thriftport=50001,  IPBASE="172.17.0.0/24", **args) # IPBASE: docker subnet
-    sensor1 = net.addSensor('sensor1', ip6='fe80::2/64', panid='0xbeef',
+    sensor1 = net.addSensor('sensor1', ip6='fe80::2/64', panid='0xbeef', trickle_t=5,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor2 = net.addSensor('sensor2', ip6='fe80::3/64', panid='0xbeef',
+    sensor2 = net.addSensor('sensor2', ip6='fe80::3/64', panid='0xbeef', trickle_t=5,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor3 = net.addSensor('sensor3', ip6='fe80::4/64', panid='0xbeef',
+    sensor3 = net.addSensor('sensor3', ip6='fe80::4/64', panid='0xbeef', trickle_t=5,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor4 = net.addSensor('sensor4', ip6='fe80::5/64', panid='0xbeef',
+    sensor4 = net.addSensor('sensor4', ip6='fe80::5/64', panid='0xbeef', trickle_t=5,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor5 = net.addSensor('sensor5', ip6='fe80::6/64', panid='0xbeef',
+    sensor5 = net.addSensor('sensor5', ip6='fe80::6/64', panid='0xbeef', trickle_t=5,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor6 = net.addSensor('sensor6', ip6='fe80::7/64', panid='0xbeef',
+    sensor6 = net.addSensor('sensor6', ip6='fe80::7/64', panid='0xbeef', trickle_t=5,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor7 = net.addSensor('sensor7', ip6='fe80::8/64', panid='0xbeef',
+    sensor7 = net.addSensor('sensor7', ip6='fe80::8/64', panid='0xbeef', trickle_t=5,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor8 = net.addSensor('sensor8', ip6='fe80::9/64', panid='0xbeef',
+    sensor8 = net.addSensor('sensor8', ip6='fe80::9/64', panid='0xbeef', trickle_t=5,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor9 = net.addSensor('sensor9', ip6='fe80::10/64', panid='0xbeef',
+    sensor9 = net.addSensor('sensor9', ip6='fe80::10/64', panid='0xbeef', trickle_t=5,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    h1 = net.addHost('h1',  ip6='fe80::3/64', ip='192.168.210.1')
+    #h1 = net.addHost('h1',  ip6='fe80::3/64', ip='192.168.210.1')
+    h1 = net.addDocker('h1', volumes=[path + "/:/root", "/tmp/.X11-unix:/tmp/.X11-unix:rw"],
+                       dimage="ramonfontes/grafana", port_bindings={3000:3000}, ip='192.168.210.1',
+                       privileged=True, environment={"DISPLAY": ":1"})
 
     net.configureWifiNodes()
 
@@ -103,10 +106,11 @@ def topology():
     s1.start([])
     net.staticArp()
 
+    makeTerm(h1, title='grafana-server', cmd="bash -c 'grafana-server;'")
     if '-s' in sys.argv:
-        makeTerm(h1, title='h1', cmd="bash -c 'python packet-processing-storing.py;'")
+        makeTerm(h1, title='h1', cmd="bash -c 'httpd && python /root/packet-processing-storing.py;'")
     else:
-        makeTerm(h1, title='h1', cmd="bash -c 'python packet-processing-non-storing.py;'")
+        makeTerm(h1, title='h1', cmd="bash -c 'httpd && python /root/packet-processing-non-storing.py;'")
     net.configRPLD(net.sensors + net.apsensors)
 
     info('*** Running CLI...\n')

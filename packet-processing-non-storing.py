@@ -1,3 +1,4 @@
+import os
 import logging
 from collections import defaultdict, OrderedDict
 from headers import *
@@ -96,6 +97,8 @@ def packet_sniffer():
 
 
 if __name__ == '__main__':
+    for n in range(1, 11):
+        os.system("echo \"{},{}\" > /var/www/localhost/htdocs/data{}.csv".format("date","Sensor {}".format(n), n))
     sniffer_thread = threading.Thread(target=packet_sniffer)
     sniffer_thread.daemon = True  # Permite que a thread seja encerrada ao fechar o programa
     sniffer_thread.start()
