@@ -34,7 +34,6 @@ def api_data():
     data = request.json
     return jsonify({"received_data": data})
 
-
 bind_layers(Ether, Lowpan, type=0x1000)
 bind_layers(Lowpan, IPv6Custom)
 bind_layers(IPv6Custom, Icmpv6_dis)
@@ -64,25 +63,27 @@ def packet_handler(packet):
     if packet.haslayer(IPv6Custom):
         ipv6_layer = packet.getlayer(IPv6Custom)
         srcAddress = ipv6_layer.srcAddr
-        set_packet_size(srcAddress, packet, packet_size)
+        set_packet_size(srcAddress, Icmpv6_dis(), packet_size)
 
     if packet.haslayer(IPv6Custom1):
         ipv6_layer = packet.getlayer(IPv6Custom1)
         srcAddress = ipv6_layer.srcAddr
-        set_packet_size(srcAddress, packet, packet_size)
+        set_packet_size(srcAddress, Icmpv6_dio(), packet_size)
 
     if packet.haslayer(IPv6Custom2):
         ipv6_layer = packet.getlayer(IPv6Custom2)
         srcAddress = ipv6_layer.srcAddr
-        set_packet_size(srcAddress, packet, packet_size)
 
     if packet.haslayer(IPv6Custom3):
         ipv6_layer = packet.getlayer(IPv6Custom3)
         srcAddress = ipv6_layer.srcAddr
-        set_packet_size(srcAddress, packet, packet_size)
+        set_packet_size(srcAddress, Icmpv6_daoack(), packet_size)
 
     if packet.haslayer(Icmpv6_dao_repeated):
         icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated)
+
+        srcAddress = ipv6_layer.srcAddr
+        set_packet_size(srcAddress, Icmpv6_dao_repeated(), packet_size)
         rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
         item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix)]
         if item not in rank[rootNode]:
@@ -90,6 +91,8 @@ def packet_handler(packet):
 
     if packet.haslayer(Icmpv6_dao_repeated1):
         icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated1)
+        srcAddress = ipv6_layer.srcAddr
+        set_packet_size(srcAddress, Icmpv6_dao_repeated1(), packet_size)
         rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
         item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix1)]
         if item not in rank[rootNode]:
@@ -99,7 +102,7 @@ def packet_handler(packet):
             rank[rootNode].append(item)
 
     if packet.haslayer(Icmpv6_dao_repeated2):
-        if ipv6_layer.payloadLength == 84:
+        """if ipv6_layer.payloadLength == 84:
             icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated2)
             print(f"DODAGID: {convert_to_ipv6(icmpv6_layer.DODAGID)}")
             print(f"Prefix1: {convert_to_ipv6(icmpv6_layer.prefix1)}")
@@ -108,9 +111,11 @@ def packet_handler(packet):
             print(f"Prefix Length1: {icmpv6_layer.prefixLength1}")
             print(f"Prefix Length1: {icmpv6_layer.prefixLength2}")
             print(f"Prefix Length1: {icmpv6_layer.prefixLength3}")
-            print(icmpv6_layer.prefix3)
+            print(icmpv6_layer.prefix3)"""
 
         icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated2)
+        srcAddress = ipv6_layer.srcAddr
+        set_packet_size(srcAddress, Icmpv6_dao_repeated2(), packet_size)
         rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
         item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix1)]
         if item not in rank[rootNode]:
@@ -124,6 +129,8 @@ def packet_handler(packet):
 
     if packet.haslayer(Icmpv6_dao_repeated3):
         icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated3)
+        srcAddress = ipv6_layer.srcAddr
+        set_packet_size(srcAddress, Icmpv6_dao_repeated3(), packet_size)
         rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
         item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix1)]
         if item not in rank[rootNode]:
@@ -140,6 +147,8 @@ def packet_handler(packet):
 
     if packet.haslayer(Icmpv6_dao_repeated4):
         icmpv6_layer = packet.getlayer(Icmpv6_dao_repeated4)
+        srcAddress = ipv6_layer.srcAddr
+        set_packet_size(srcAddress, Icmpv6_dao_repeated4(), packet_size)
         rootNode = convert_to_ipv6(icmpv6_layer.DODAGID)
         item = [rootNode, convert_to_ipv6(icmpv6_layer.prefix1)]
         if item not in rank[rootNode]:
@@ -164,6 +173,8 @@ def packet_sniffer():
     sniff(iface="h1-eth1", filter="ether proto 0x1000 or ether proto 0x1001 or ether proto 0x1002 or ether proto 0x1003", prn=packet_handler)
 
 if __name__ == '__main__':
+    for n in range(1, 11):
+        os.system("echo \"{},{}\" > /var/www/localhost/htdocs/data{}.csv".format("date","Sensor {}".format(n), n))
     sniffer_thread = threading.Thread(target=packet_sniffer)
     sniffer_thread.daemon = True  # Permite que a thread seja encerrada ao fechar o programa
     sniffer_thread.start()

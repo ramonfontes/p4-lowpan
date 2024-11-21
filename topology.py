@@ -7,6 +7,7 @@
 
 import os
 import sys
+from time import sleep
 
 from containernet.net import Containernet
 from containernet.node import DockerP4Sensor, DockerSensor
@@ -19,6 +20,10 @@ from mininet.term import makeTerm
 def topology():
     net = Containernet(iot_module='mac802154_hwsim', ipBase='192.168.210.0/24')
 
+    t = 5
+    if '-10' in sys.argv:
+        t = 10
+
     path = os.path.dirname(os.path.abspath(__file__))
     json_file = '/root/json/lowpan-non-storing.json'
     config = path + '/rules/p4_commands.txt'
@@ -30,50 +35,50 @@ def topology():
         config = path + '/rules/p4_commands.txt'
         args = {'json': json_file, 'switch_config': config}
         mode = 2
-        dimage = 'ramonfontes/bmv2:lowpan-storing'
-
+        #dimage = 'ramonfontes/bmv2:lowpan-storing'
+        dimage = 'ramonfontes/bmv2:lowpan'
 
     info('*** Adding Nodes...\n')
     s1 = net.addSwitch("s1", failMode='standalone')
     ap1 = net.addAPSensor('ap1', cls=DockerP4Sensor, ip6='fe80::1/64', panid='0xbeef',
                            dodag_root=True, storing_mode=mode, privileged=True,
                            volumes=[path + "/:/root", "/tmp/.X11-unix:/tmp/.X11-unix:rw"],
-                           dimage=dimage, cpu_shares=20, netcfg=True, trickle_t=5,
-                           environment={"DISPLAY": ":0"}, loglevel="info",
+                           dimage=dimage, cpu_shares=20, netcfg=True, trickle_t=t,
+                           environment={"DISPLAY": ":1"}, loglevel="info",
                            thriftport=50001,  IPBASE="172.17.0.0/24", **args) # IPBASE: docker subnet
-    sensor1 = net.addSensor('sensor1', ip6='fe80::2/64', panid='0xbeef', trickle_t=5,
+    sensor1 = net.addSensor('sensor1', ip6='fe80::2/64', panid='0xbeef', trickle_t=t,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor2 = net.addSensor('sensor2', ip6='fe80::3/64', panid='0xbeef', trickle_t=5,
+    sensor2 = net.addSensor('sensor2', ip6='fe80::3/64', panid='0xbeef', trickle_t=t,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor3 = net.addSensor('sensor3', ip6='fe80::4/64', panid='0xbeef', trickle_t=5,
+    sensor3 = net.addSensor('sensor3', ip6='fe80::4/64', panid='0xbeef', trickle_t=t,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor4 = net.addSensor('sensor4', ip6='fe80::5/64', panid='0xbeef', trickle_t=5,
+    sensor4 = net.addSensor('sensor4', ip6='fe80::5/64', panid='0xbeef', trickle_t=t,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor5 = net.addSensor('sensor5', ip6='fe80::6/64', panid='0xbeef', trickle_t=5,
+    sensor5 = net.addSensor('sensor5', ip6='fe80::6/64', panid='0xbeef', trickle_t=t,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor6 = net.addSensor('sensor6', ip6='fe80::7/64', panid='0xbeef', trickle_t=5,
+    sensor6 = net.addSensor('sensor6', ip6='fe80::7/64', panid='0xbeef', trickle_t=t,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor7 = net.addSensor('sensor7', ip6='fe80::8/64', panid='0xbeef', trickle_t=5,
+    sensor7 = net.addSensor('sensor7', ip6='fe80::8/64', panid='0xbeef', trickle_t=t,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor8 = net.addSensor('sensor8', ip6='fe80::9/64', panid='0xbeef', trickle_t=5,
+    sensor8 = net.addSensor('sensor8', ip6='fe80::9/64', panid='0xbeef', trickle_t=t,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    sensor9 = net.addSensor('sensor9', ip6='fe80::10/64', panid='0xbeef', trickle_t=5,
+    sensor9 = net.addSensor('sensor9', ip6='fe80::10/64', panid='0xbeef', trickle_t=t,
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
@@ -112,6 +117,13 @@ def topology():
     else:
         makeTerm(h1, title='h1', cmd="bash -c 'httpd && python /root/packet-processing-non-storing.py;'")
     net.configRPLD(net.sensors + net.apsensors)
+
+    # print time
+    for t in range(0, 60):
+        print(f"\r{t}", end="", flush=True)
+        sleep(1)
+
+    h1.cmd("ifconfig h1-eth1 down")
 
     info('*** Running CLI...\n')
     CLI(net)

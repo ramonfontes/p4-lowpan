@@ -278,13 +278,13 @@ parser MyParser(packet_in packet,
         packet.extract(hdr.ipv6);
         transition select(hdr.ipv6.payloadLength, hdr.ipv6.srcAddr) {
             (0x2C, 0xff02_0000_0000_0000_0000_0000_0000_001a): parse_icmpv6_dio;
-            (0x06, _): parse_icmpv6_dis;
+            (0x06, _): parse_icmpv6_dis; //6
             (0x2C, _): parse_icmpv6_dao_repeated; //44
             (0x40, _): parse_icmpv6_dao_repeated1; //64
             (0x54, _): parse_icmpv6_dao_repeated2; //84
             (0x68, _): parse_icmpv6_dao_repeated3; //104
             (0x7c, _): parse_icmpv6_dao_repeated4; //124
-            (0x18, _): parse_icmpv6_daoack;
+            (0x18, _): parse_icmpv6_daoack; //24
             #default: accept;
         }
     }

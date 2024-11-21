@@ -154,10 +154,10 @@ parser MyParser(packet_in packet,
     state parse_ipv6 {
         packet.extract(hdr.ipv6);
         transition select(hdr.ipv6.payloadLength) {
-            0x2C: parse_icmpv6_dio;
-            0x06: parse_icmpv6_dis;
-            0x42: parse_icmpv6_dao;
-            0x18: parse_icmpv6_daoack;
+            0x2C: parse_icmpv6_dio; //44
+            0x06: parse_icmpv6_dis; //6
+            0x42: parse_icmpv6_dao; //66
+            0x18: parse_icmpv6_daoack; //24
             #default: accept;
         }
     }

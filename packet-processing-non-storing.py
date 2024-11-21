@@ -61,22 +61,22 @@ def packet_handler(packet):
     if packet.haslayer(IPv6Custom):
         ipv6_layer = packet.getlayer(IPv6Custom)
         srcAddress = ipv6_layer.srcAddr
-        set_packet_size(srcAddress, packet, packet_size)
+        set_packet_size(srcAddress, Icmpv6_dis(), packet_size)
 
     if packet.haslayer(IPv6Custom1):
         ipv6_layer = packet.getlayer(IPv6Custom1)
         srcAddress = ipv6_layer.srcAddr
-        set_packet_size(srcAddress, packet, packet_size)
+        set_packet_size(srcAddress, Icmpv6_dio(), packet_size)
 
     if packet.haslayer(IPv6Custom2):
         ipv6_layer = packet.getlayer(IPv6Custom2)
         srcAddress = ipv6_layer.srcAddr
-        set_packet_size(srcAddress, packet, packet_size)
+        set_packet_size(srcAddress, Icmpv6_dao(), packet_size)
 
     if packet.haslayer(IPv6Custom3):
         ipv6_layer = packet.getlayer(IPv6Custom3)
         srcAddress = ipv6_layer.srcAddr
-        set_packet_size(srcAddress, packet, packet_size)
+        set_packet_size(srcAddress, Icmpv6_daoack(), packet_size)
 
     if packet.haslayer(Icmpv6_dao):
         icmpv6_layer = packet.getlayer(Icmpv6_dao)
