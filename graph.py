@@ -24,7 +24,7 @@ for bar, value in zip(bars, values):
     )
 
 ax.set_title("Total Packet Lengths - Non-Storage (5s)", fontsize=16, color='black', pad=20, fontdict=dict(weight='bold'))
-ax.set_ylabel("Bits", fontsize=14, color='black')
+ax.set_ylabel("Bytes", fontsize=14, color='black')
 ax.set_xlabel("Sensors", fontsize=14, color='black')
 ax.spines['bottom'].set_color('black')
 ax.spines['left'].set_color('black')
@@ -53,7 +53,7 @@ for bar, value in zip(bars, values):
     )
 
 ax.set_title("Total Packet Lengths - Non-Storage (10s)", fontsize=16, color='black', pad=20, fontdict=dict(weight='bold'))
-ax.set_ylabel("Bits", fontsize=14, color='black')
+ax.set_ylabel("Bytes", fontsize=14, color='black')
 ax.set_xlabel("Sensors", fontsize=14, color='black')
 ax.spines['bottom'].set_color('black')
 ax.spines['left'].set_color('black')
@@ -84,7 +84,7 @@ for bar, value in zip(bars, values):
     )
 
 ax.set_title("Total Packet Lengths - Storage (5s)", fontsize=16, color='black', pad=20, fontdict=dict(weight='bold'))
-ax.set_ylabel("Bits", fontsize=14, color='black')
+ax.set_ylabel("Bytes", fontsize=14, color='black')
 ax.set_xlabel("Sensors", fontsize=14, color='black')
 ax.spines['bottom'].set_color('black')
 ax.spines['left'].set_color('black')
@@ -115,7 +115,7 @@ for bar, value in zip(bars, values):
     )
 
 ax.set_title("Total Packet Lengths - Storage (10s)", fontsize=16, color='black', pad=20, fontdict=dict(weight='bold'))
-ax.set_ylabel("Bits", fontsize=14, color='black')
+ax.set_ylabel("Bytes", fontsize=14, color='black')
 ax.set_xlabel("Sensors", fontsize=14, color='black')
 ax.spines['bottom'].set_color('black')
 ax.spines['left'].set_color('black')
