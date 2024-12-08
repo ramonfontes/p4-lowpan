@@ -56,9 +56,11 @@ Finally, go back to the terminal and type the command `EOF` or `exit` and `Enter
 Running the network topology:  
 `$ sudo python topology.py -10`
 
+**> Follow the same steps as in use case 1**
+
 ### Results
 
-**You will find below the results for Non-storing Mode Scenario with trickle time = 10s**
+Then, you will find below the results for Non-storing Mode Scenario with trickle time = 10s.
 
 ![Non-storage mode trickle time 10s](./assets/images/step8-non-storage-mode-10s.PNG)
 
@@ -67,11 +69,11 @@ Running the network topology:
 Running the network topology:  
 `$ sudo python topology.py -s`
 
-**follow the same steps as in use case 1**
+**> Follow the same steps as in use case 1**
 
 ### Results
 
-**You will find below the results for Storing Mode Scenario with trickle time = 5s**
+Then, you will find below the results for Storing Mode Scenario with trickle time = 5s.
 
 ![Storage mode trickle time 5s](./assets/images/step9-storage-mode-5s.PNG)
 
@@ -80,8 +82,10 @@ Running the network topology:
 Running the network topology:  
 `$ sudo python topology.py -s -10`
 
+**> Follow the same steps as in use case 1**
+
 ### Results
 
-**You will find below the results for Storing Mode Scenario with trickle time = 10s**
+Then, you will find below the results for Storing Mode Scenario with trickle time = 10s.
 
 ![Storage mode trickle time 10s](./assets/images/step10-storage-mode-10s.PNG)
