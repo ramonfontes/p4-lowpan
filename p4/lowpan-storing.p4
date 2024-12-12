@@ -107,6 +107,13 @@ bit<8>    type;
     bit<8>    rplReserved;
     bit<8>    prefixLength;
     bit<128>  prefix;
+    bit<8>    ttime;
+    bit<8>    len;
+    bit<8>    flags;
+    bit<8>    tcontrol;
+    bit<8>    sequence;
+    bit<8>    lifetime;
+    bit<128>  parent;
 }
 
 header icmpv6_dao_repeated1_t {
@@ -269,21 +276,21 @@ parser MyParser(packet_in packet,
     state start {
         packet.extract(hdr.lowpan);
         transition select(hdr.lowpan.ethType) {
-            0x86dd: parse_ipv6; 
+            0x86dd: parse_ipv6;
             default: accept;
         }
     }
-   
+
     state parse_ipv6 {
         packet.extract(hdr.ipv6);
         transition select(hdr.ipv6.payloadLength, hdr.ipv6.srcAddr) {
             (0x2C, 0xff02_0000_0000_0000_0000_0000_0000_001a): parse_icmpv6_dio;
             (0x06, _): parse_icmpv6_dis; //6
-            (0x2C, _): parse_icmpv6_dao_repeated; //44
-            (0x40, _): parse_icmpv6_dao_repeated1; //64
-            (0x54, _): parse_icmpv6_dao_repeated2; //84
-            (0x68, _): parse_icmpv6_dao_repeated3; //104
-            (0x7c, _): parse_icmpv6_dao_repeated4; //124
+            (0x42, _): parse_icmpv6_dao_repeated; //66
+            (0x56, _): parse_icmpv6_dao_repeated1; //86
+            (0x6A, _): parse_icmpv6_dao_repeated2; //106
+            (0x7E, _): parse_icmpv6_dao_repeated3; //126
+            (0x92, _): parse_icmpv6_dao_repeated4; //146
             (0x18, _): parse_icmpv6_daoack; //24
             #default: accept;
         }
@@ -371,7 +378,7 @@ control MyIngress(inout headers hdr,
             }
             else if (meta.meta.custom_value == 0x3) {
                 hdr.ethernet.etherType = 0x1003; //daoack
-            }             
+            }
             standard_metadata.egress_spec = port;
         }
         else{
@@ -407,7 +414,7 @@ control MyIngress(inout headers hdr,
 control MyEgress(inout headers hdr,
                  inout metadata meta,
                  inout standard_metadata_t standard_metadata) {
-    apply { 
+    apply {
           }
 }
 

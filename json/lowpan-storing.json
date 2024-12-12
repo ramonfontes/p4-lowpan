@@ -129,7 +129,14 @@
         ["optionLength", 8, false],
         ["rplReserved", 8, false],
         ["prefixLength", 8, false],
-        ["prefix", 128, false]
+        ["prefix", 128, false],
+        ["ttime", 8, false],
+        ["len", 8, false],
+        ["flags", 8, false],
+        ["tcontrol", 8, false],
+        ["sequence", 8, false],
+        ["lifetime", 8, false],
+        ["parent", 128, false]
       ]
     },
     {
@@ -469,31 +476,31 @@
             },
             {
               "type" : "hexstr",
-              "value" : "0x002c00000000000000000000000000000000",
+              "value" : "0x004200000000000000000000000000000000",
               "mask" : "0xffff00000000000000000000000000000000",
               "next_state" : "parse_icmpv6_dao_repeated"
             },
             {
               "type" : "hexstr",
-              "value" : "0x004000000000000000000000000000000000",
+              "value" : "0x005600000000000000000000000000000000",
               "mask" : "0xffff00000000000000000000000000000000",
               "next_state" : "parse_icmpv6_dao_repeated1"
             },
             {
               "type" : "hexstr",
-              "value" : "0x005400000000000000000000000000000000",
+              "value" : "0x006a00000000000000000000000000000000",
               "mask" : "0xffff00000000000000000000000000000000",
               "next_state" : "parse_icmpv6_dao_repeated2"
             },
             {
               "type" : "hexstr",
-              "value" : "0x006800000000000000000000000000000000",
+              "value" : "0x007e00000000000000000000000000000000",
               "mask" : "0xffff00000000000000000000000000000000",
               "next_state" : "parse_icmpv6_dao_repeated3"
             },
             {
               "type" : "hexstr",
-              "value" : "0x007c00000000000000000000000000000000",
+              "value" : "0x009200000000000000000000000000000000",
               "mask" : "0xffff00000000000000000000000000000000",
               "next_state" : "parse_icmpv6_dao_repeated4"
             },
@@ -820,8 +827,8 @@
       "name" : "deparser",
       "id" : 0,
       "source_info" : {
-        "filename" : "non-storing.p4",
-        "line" : 427,
+        "filename" : "lowpan-storing.p4",
+        "line" : 434,
         "column" : 8,
         "source_fragment" : "MyDeparser"
       },
@@ -849,8 +856,8 @@
             }
           ],
           "source_info" : {
-            "filename" : "non-storing.p4",
-            "line" : 358,
+            "filename" : "lowpan-storing.p4",
+            "line" : 365,
             "column" : 8,
             "source_fragment" : "mark_to_drop(standard_metadata)"
           }
@@ -1610,7 +1617,7 @@
       ]
     },
     {
-      "name" : "nonstoring395",
+      "name" : "lowpanstoring402",
       "id" : 2,
       "runtime_data" : [],
       "primitives" : [
@@ -1623,8 +1630,8 @@
             }
           ],
           "source_info" : {
-            "filename" : "non-storing.p4",
-            "line" : 395,
+            "filename" : "lowpan-storing.p4",
+            "line" : 402,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.setValid()"
           }
@@ -1637,19 +1644,19 @@
       "name" : "ingress",
       "id" : 0,
       "source_info" : {
-        "filename" : "non-storing.p4",
-        "line" : 353,
+        "filename" : "lowpan-storing.p4",
+        "line" : 360,
         "column" : 8,
         "source_fragment" : "MyIngress"
       },
-      "init_table" : "tbl_nonstoring395",
+      "init_table" : "tbl_lowpanstoring402",
       "tables" : [
         {
-          "name" : "tbl_nonstoring395",
+          "name" : "tbl_lowpanstoring402",
           "id" : 0,
           "source_info" : {
-            "filename" : "non-storing.p4",
-            "line" : 395,
+            "filename" : "lowpan-storing.p4",
+            "line" : 402,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.setValid()"
           },
@@ -1661,10 +1668,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [2],
-          "actions" : ["nonstoring395"],
+          "actions" : ["lowpanstoring402"],
           "base_default_next" : "MyIngress.port_table",
           "next_tables" : {
-            "nonstoring395" : "MyIngress.port_table"
+            "lowpanstoring402" : "MyIngress.port_table"
           },
           "default_entry" : {
             "action_id" : 2,
@@ -1677,8 +1684,8 @@
           "name" : "MyIngress.port_table",
           "id" : 1,
           "source_info" : {
-            "filename" : "non-storing.p4",
-            "line" : 382,
+            "filename" : "lowpan-storing.p4",
+            "line" : 389,
             "column" : 10,
             "source_fragment" : "port_table"
           },
@@ -1718,8 +1725,8 @@
       "name" : "egress",
       "id" : 1,
       "source_info" : {
-        "filename" : "non-storing.p4",
-        "line" : 407,
+        "filename" : "lowpan-storing.p4",
+        "line" : 414,
         "column" : 8,
         "source_fragment" : "MyEgress"
       },
@@ -1770,7 +1777,7 @@
       ["standard_metadata", "priority"]
     ]
   ],
-  "program" : "./non-storing.p4i",
+  "program" : "./lowpan-storing.p4i",
   "__meta__" : {
     "version" : [2, 23],
     "compiler" : "https://github.com/p4lang/p4c"
