@@ -43,7 +43,7 @@ Click on the `three dots` and then on `View`.
 
 Then, you will see the result for Non-storing Mode Scenario with trickle time = 5s
 
-![Non-storage mode trickle time 5s](./assets/images/step6-non-storage-mode-5s.PNG)
+![Non-storage mode trickle time 5s](./assets/images/step6-non-storage-mode-5s.png)
 
 Finally, go back to the terminal and type the command `EOF` or `exit` and `Enter`. 
 
@@ -62,7 +62,7 @@ Running the network topology:
 
 Then, you will find below the results for Non-storing Mode Scenario with trickle time = 10s.
 
-![Non-storage mode trickle time 10s](./assets/images/step8-non-storage-mode-10s.PNG)
+![Non-storage mode trickle time 10s](./assets/images/step8-non-storage-mode-10s.png)
 
 ### Use Case #3 - Storing Mode Scenario (trickle time 5s)
  
@@ -75,7 +75,7 @@ Running the network topology:
 
 Then, you will find below the results for Storing Mode Scenario with trickle time = 5s.
 
-![Storage mode trickle time 5s](./assets/images/step9-storage-mode-5s.PNG)
+![Storage mode trickle time 5s](./assets/images/step9-storage-mode-5s.png)
 
 ### Use Case #4 - Storing Mode Scenario (trickle time 10s)
  
@@ -88,4 +88,4 @@ Running the network topology:
 
 Then, you will find below the results for Storing Mode Scenario with trickle time = 10s.
 
-![Storage mode trickle time 10s](./assets/images/step10-storage-mode-10s.PNG)
+![Storage mode trickle time 10s](./assets/images/step10-storage-mode-10s.png)

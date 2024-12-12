@@ -33,7 +33,7 @@ ax.tick_params(axis='y', colors='black')
 ax.yaxis.label.set_color('black')
 ax.xaxis.label.set_color('black')
 ax.title.set_color('black')
-plt.ylim(0,3000)
+plt.ylim(0,2500)
 plt.savefig("assets/images/non5.eps")
 
 values = [970, 920, 462, 396, 964, 528, 528, 528, 396] #t10
@@ -63,7 +63,7 @@ ax.yaxis.label.set_color('black')
 ax.xaxis.label.set_color('black')
 ax.title.set_color('black')
 
-plt.ylim(0,3000)
+plt.ylim(0,2500)
 plt.savefig("assets/images/non10.eps")
 
 labels = ["Sensor 1", "Sensor 2", "Sensor 5"]
@@ -94,7 +94,7 @@ ax.yaxis.label.set_color('black')
 ax.xaxis.label.set_color('black')
 ax.title.set_color('black')
 
-plt.ylim(0,3000)
+plt.ylim(0,2500)
 plt.savefig("assets/images/5.eps")
 
 
@@ -125,5 +125,5 @@ ax.yaxis.label.set_color('black')
 ax.xaxis.label.set_color('black')
 ax.title.set_color('black')
 
-plt.ylim(0,3000)
+plt.ylim(0,2500)
 plt.savefig("assets/images/10.eps")
