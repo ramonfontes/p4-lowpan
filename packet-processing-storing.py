@@ -167,16 +167,15 @@ def packet_handler(packet):
             rank[rootNode].append(item)
 
 
-# Função para sniffar pacotes
 def packet_sniffer():
-    # Inicia o sniffer
     sniff(iface="h1-eth1", filter="ether proto 0x1000 or ether proto 0x1001 or ether proto 0x1002 or ether proto 0x1003", prn=packet_handler)
 
 if __name__ == '__main__':
     for n in range(1, 11):
-        os.system("echo \"{},{}\" > /var/www/localhost/htdocs/data{}.csv".format("date","Sensor {}".format(n), n))
+        os.system("rm /var/www/localhost/htdocs/data{}.csv".format(n))
+    for n in range(2, 11):
+        os.system("echo \"{},{}\" > /var/www/localhost/htdocs/data{}.csv".format("date","Sensor {}".format(n-1), n-1))
     sniffer_thread = threading.Thread(target=packet_sniffer)
-    sniffer_thread.daemon = True  # Permite que a thread seja encerrada ao fechar o programa
+    sniffer_thread.daemon = True
     sniffer_thread.start()
-
     app.run(host='192.168.210.1', port=5000)

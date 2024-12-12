@@ -26,9 +26,9 @@ def set_packet_size(srcAddress, packet, packet_size):
         formatted_date = now.strftime("%Y-%m-%dT%H:%M:%SZ")
         if srcAddress in packet_size:
             packet_size[srcAddress] += len(packet)
-            os.system("echo \"{},{}\" >> /var/www/localhost/htdocs/data{}.csv".format(formatted_date, packet_size[srcAddress], srcAddress.split("::")[1]))
+            os.system("echo \"{},{}\" >> /var/www/localhost/htdocs/data{}.csv".format(formatted_date, packet_size[srcAddress], int(srcAddress.split("::")[1])-1))
             return packet_size
         else:
             packet_size[srcAddress] = len(packet)
-            os.system("echo \"{},{}\" >> /var/www/localhost/htdocs/data{}.csv".format(formatted_date, packet_size[srcAddress], srcAddress.split("::")[1]))
+            os.system("echo \"{},{}\" >> /var/www/localhost/htdocs/data{}.csv".format(formatted_date, packet_size[srcAddress], int(srcAddress.split("::")[1])-1))
             return packet_size

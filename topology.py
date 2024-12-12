@@ -35,7 +35,6 @@ def topology():
         config = path + '/rules/p4_commands.txt'
         args = {'json': json_file, 'switch_config': config}
         mode = 2
-        #dimage = 'ramonfontes/bmv2:lowpan-storing'
         dimage = 'ramonfontes/bmv2:lowpan'
 
     info('*** Adding Nodes...\n')
@@ -82,7 +81,6 @@ def topology():
                             cls=DockerSensor, dimage=dimage, cpu_shares=20,
                             volumes=["/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                             environment={"DISPLAY": ":0"}, privileged=True)
-    #h1 = net.addHost('h1',  ip6='fe80::3/64', ip='192.168.210.1')
     h1 = net.addDocker('h1', volumes=[path + "/:/root", "/tmp/.X11-unix:/tmp/.X11-unix:rw"],
                        dimage="ramonfontes/grafana", port_bindings={3000:3000}, ip='192.168.210.1',
                        privileged=True, environment={"DISPLAY": ":1"})
@@ -111,6 +109,7 @@ def topology():
     s1.start([])
     net.staticArp()
 
+    h1.cmd('pkill -9 -f xterm')
     makeTerm(h1, title='grafana-server', cmd="bash -c 'grafana-server;'")
     if '-s' in sys.argv:
         makeTerm(h1, title='h1', cmd="bash -c 'httpd && python /root/packet-processing-storing.py;'")
@@ -127,8 +126,6 @@ def topology():
 
     info('*** Running CLI...\n')
     CLI(net)
-
-    os.system('pkill -9 -f xterm')
 
     info('*** Stopping network...\n')
     net.stop()
