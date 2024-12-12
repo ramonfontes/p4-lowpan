@@ -7,7 +7,7 @@ labels = [
     "Sensor 6", "Sensor 7", "Sensor 8", "Sensor 9"
 ]
 
-values = [1578, 1576, 1520, 858, 792, 1636, 924, 924, 924, 792] #t5
+values = [1572, 1630, 1586, 858, 792, 1570, 924, 924, 924, 792] #t5
 
 fig, ax = plt.subplots(figsize=(10, 6))
 bars = ax.bar(labels, values, color='skyblue')
@@ -36,7 +36,7 @@ ax.title.set_color('black')
 plt.ylim(0,2500)
 plt.savefig("non5.eps")
 
-values = [888, 916, 932, 462, 396, 976, 528, 528, 528, 396] #t10
+values = [876, 964, 926, 462, 396, 970, 528, 528, 528, 396] #t10
 
 fig, ax = plt.subplots(figsize=(10, 6))
 bars = ax.bar(labels, values, color='skyblue')
@@ -67,7 +67,7 @@ plt.ylim(0,2500)
 plt.savefig("non10.eps")
 
 labels = ["Root", "Sensor 1", "Sensor 2", "Sensor 5"]
-values = [2056, 2110, 1980, 2130] #t5
+values = [1458, 2000, 2440, 2244] #t5
 
 fig, ax = plt.subplots(figsize=(10, 6))
 bars = ax.bar(labels, values, color='skyblue')
@@ -98,7 +98,7 @@ plt.ylim(0,2500)
 plt.savefig("5.eps")
 
 
-values = [1356, 1042, 1074, 1194] #t10
+values = [906, 1112, 1246, 1206] #t10
 
 fig, ax = plt.subplots(figsize=(10, 6))
 bars = ax.bar(labels, values, color='skyblue')
